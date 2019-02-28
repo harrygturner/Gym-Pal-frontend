@@ -10,11 +10,12 @@ class App extends Component {
     myWorkout: [],
     equipment: [],
     muscle: [],
-    exerciseimage: []
+    exerciseimage: [],
+    exerciseSelectedId: null,
   }
 
+  // ----------------- fetch all data ----------------
   fetchData = (type, limit) => {
-    console.log(type)
     fetch(`https://wger.de/api/v2/${type}/?limit=${limit}`)
       .then(resp => resp.json())
       .then(data => {
@@ -42,11 +43,18 @@ class App extends Component {
     this.fetchAllData()
   }
 
+  // ----- handle click to display selected exercise -------- 
+  handleExerciseSelected = (id) => {
+    this.setState({
+      exerciseSelectedId: id
+    })
+  }
+
   render() {
     return (
       <div className="App">
         <MyWorkout />
-        <ExerciseContainer exercises={this.state.exercise} />
+        <ExerciseContainer exercises={this.state.exercise} handleExerciseSelected={this.handleExerciseSelected} exerciseSelectedId={this.state.exerciseSelectedId} />
       </div>
     );
   }
