@@ -53,9 +53,19 @@ class App extends Component {
     })
   }
 
+  handleAddToWorkout = () => {
+    const exercise = this.state.exerciseSelected
+    if(!this.state.myWorkout.includes(exercise)) {
+      this.setState({
+        myWorkout: [...this.state.myWorkout, exercise],
+        exerciseSelected: null
+      })
+    }
+  }
+
   // find query (muscle/equipment) for that speific exercise
-  findMuscleForExercise = (id) => {
-    this.state.muscle.filter( muscle => muscle.id === id)
+  findQueryForExercise = (query, id) => {
+    return this.state[query].find(data => data.id === id)
   }
 
   // find exercise image 
@@ -75,11 +85,14 @@ class App extends Component {
     return (
       <div className="App">
         <MyWorkout workoutExercises={this.state.workoutExercises} />
+
         { this.state.exerciseSelected
           ? <ExerciseSpec 
               exercise={this.state.exerciseSelected} 
               findExerciseImage={this.findExerciseImage}
               handleGoBack={this.handleGoBack}
+              findQueryForExercise={this.findQueryForExercise}
+              handleAddToWorkout={this.handleAddToWorkout}
             /> 
           : <ExerciseContainer 
               exercises={this.state.exercise} 

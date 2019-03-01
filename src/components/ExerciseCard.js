@@ -21,27 +21,45 @@ const styles = {
 
 const ExerciseCard = (props) => {
    const exercise = props.exercise;
-      const { classes } = props;
-      return (
-         <Grid item xs={3}>
-            <Paper className={classes.paper}></Paper>
-            <Card className={classes.card}>
-               <CardActionArea onClick={() => props.handleExerciseSelected(exercise.id)}>
-               <CardContent>
-                  <Typography gutterBottom variant="h6" component="h6">
-                     {exercise.name}
-                  </Typography>
-               </CardContent>
+   const { classes } = props;
+   // get muscle array
+   let muscleArray
+   if(exercise.muscles.length !== 0) {
+      muscleArray = exercise.muscles.map((muscleId) => props.findQueryForExercise('muscle', muscleId))
+   } else {
+      muscleArray = ['No data found.']
+   }
+
+   // get equipment array
+   let equipmentArray
+   if (exercise.equipment.length !== 0) {
+      equipmentArray = exercise.equipment.map((equipmentId) => props.findQueryForExercise('equipment', equipmentId))
+   } else {
+      equipmentArray = ['No data found']
+   }
+
+   return (
+      <Grid item xs={3}>
+         <Paper className={classes.paper}></Paper>
+         <Card className={classes.card}>
+            <CardActionArea onClick={() => props.handleExerciseSelected(exercise.id)}>
+            <CardContent>
+               <Typography gutterBottom variant="h6" component="h6">
+                  {exercise.name}
+               </Typography>
                <div className='icon'>
-                  <img src={muscleLogo} alt='muscle icon' style={{ width: '8%', marginRight: '10px' }} />
+               <img src={muscleLogo} alt='muscle icon' style={{ width: '8%', marginRight: '10px' }} />
+               {typeof(muscleArray[0]) === 'string' ? muscleArray[0] : muscleArray[0].name}
                </div>  
                <div className='icon'>
-                  <img src={dumbbellLogo} alt='dumbbell icon' style={{ width: '8%', marginRight: '10px' }} />
+               <img src={dumbbellLogo} alt='dumbbell icon' style={{ width: '8%', marginRight: '10px' }} />
+               {typeof(equipmentArray[0]) === 'string' ? equipmentArray[0] : equipmentArray[0].name}
                </div>
-               </CardActionArea>
-            </Card>
-         </Grid>
-      );
+               </CardContent>
+            </CardActionArea>
+         </Card>
+      </Grid>
+   );
 }
 
 ExerciseCard.propTypes = {
