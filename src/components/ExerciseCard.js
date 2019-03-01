@@ -7,8 +7,9 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import muscleLogo from '../images/muscle_icon2.png';
-import dumbbellLogo from '../images/dumbbell_icon.png';
+import muscleLogo from '../images/muscles.svg';
+import dumbbellLogo from '../images/dumbbell.svg';
+
 
 const styles = {
    card: {
@@ -47,14 +48,18 @@ const ExerciseCard = (props) => {
                <Typography gutterBottom variant="h6" component="h6">
                   {exercise.name}
                </Typography>
-               <div className='icon'>
-               <img src={muscleLogo} alt='muscle icon' style={{ width: '8%', marginRight: '10px' }} />
-               {typeof(muscleArray[0]) === 'string' ? muscleArray[0] : muscleArray[0].name}
-               </div>  
-               <div className='icon'>
-               <img src={dumbbellLogo} alt='dumbbell icon' style={{ width: '8%', marginRight: '10px' }} />
-               {typeof(equipmentArray[0]) === 'string' ? equipmentArray[0] : equipmentArray[0].name}
-               </div>
+               <Typography color="textSecondary" variant='caption'>
+                  <div className='icon-row'>
+                     <div className='icon'>
+                        <img src={muscleLogo} style={{ width: '12%', marginRight: '10px' }} alt='muscles' />
+                        {typeof(muscleArray[0]) === 'string' ? null : muscleArray[0].name}
+                     </div>  
+                     <div className='icon'>
+                        <img src={dumbbellLogo} alt='dumbbell icon' style={{ width: '14%', marginRight: '10px' }} />
+                        {typeof(equipmentArray[0]) === 'string' ? null : equipmentArray[0].name}
+                     </div>
+                  </div>
+               </Typography>
                </CardContent>
             </CardActionArea>
          </Card>
