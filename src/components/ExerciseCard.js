@@ -3,14 +3,12 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
+import muscleLogo from '../images/muscle_icon2.png';
+import dumbbellLogo from '../images/dumbbell_icon.png';
 
 const styles = {
    card: {
@@ -30,23 +28,17 @@ const ExerciseCard = (props) => {
             <Card className={classes.card}>
                <CardActionArea onClick={() => props.handleExerciseSelected(exercise.id)}>
                <CardContent>
-                  <Typography gutterBottom variant="h5" component="h4">
+                  <Typography gutterBottom variant="h6" component="h6">
                      {exercise.name}
                   </Typography>
-                  <Typography component="p">
-                     Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-                     across all continents except Antarctica
-                  </Typography>
                </CardContent>
+               <div className='icon'>
+                  <img src={muscleLogo} alt='muscle icon' style={{ width: '8%', marginRight: '10px' }} />
+               </div>  
+               <div className='icon'>
+                  <img src={dumbbellLogo} alt='dumbbell icon' style={{ width: '8%', marginRight: '10px' }} />
+               </div>
                </CardActionArea>
-               <CardActions>
-                  <IconButton aria-label="Add to favorites">
-                     <FavoriteIcon />
-                  </IconButton>
-                  <IconButton aria-label="Share">
-                     <ShareIcon />
-                  </IconButton>
-               </CardActions>
             </Card>
          </Grid>
       );

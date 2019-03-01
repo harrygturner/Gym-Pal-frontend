@@ -18,3 +18,8 @@ code {
   padding: 60px;
   margin-bottom: 15px;
 }
+
+.icon {
+  display: inline;
+  margin: 0px 20px;
+}

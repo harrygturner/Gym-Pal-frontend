@@ -21,7 +21,14 @@ const styles = theme => ({
 const ExerciseContainer = (props) => {
    const { classes } = props;
    const renderExercise = props.exercises.map(exercise => {
-      return typeof(exercise) === 'string' ? exercise : <ExerciseCard exercise={exercise} key={exercise.id} handleExerciseSelected={props.handleExerciseSelected}/>
+      return typeof(exercise) === 'string' 
+      ? exercise 
+      : <ExerciseCard 
+         exercise={exercise} 
+         key={exercise.id} 
+         handleExerciseSelected={props.handleExerciseSelected}
+         findQueryForExercise={props.findQueryForExercise}
+      />
    })
 
    return (
