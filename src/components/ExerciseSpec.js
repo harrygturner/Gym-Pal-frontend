@@ -6,6 +6,8 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Button from '@material-ui/core/Button';
+import muscleLogo from '../images/muscle_icon2.png';
+import dumbbellLogo from '../images/dumbbell_icon.png';
 
 const styles = theme => ({
    root: {
@@ -38,13 +40,31 @@ function ExerciseSpec(props) {
    const exercise = props.exercise
    const { classes } = props;
    const exerciseImage = props.findExerciseImage(exercise.id)
-   console.log(exerciseImage)
-
+   
    const renderImage = () => (
       <ButtonBase className={classes.image}>
          <img className={classes.img} alt="complex" src={exerciseImage.image} />
       </ButtonBase>
    );
+
+   // get muscle array
+   let muscleArray
+   if(exercise.muscles.length !== 0) {
+      muscleArray = exercise.muscles.map((muscleId) => props.findQueryForExercise('muscle', muscleId))
+   } else {
+      muscleArray = ['No data found.']
+   }
+
+   // get equipment array
+   let equipmentArray
+   if (exercise.equipment.length !== 0) {
+      equipmentArray = exercise.equipment.map((equipmentId) => props.findQueryForExercise('equipment', equipmentId))
+   } else {
+      equipmentArray = ['No data found']
+   }
+
+   const renderList = (array) => array.map(el => el.name).join(', ')
+   
 
    return (
       <div className={classes.root}>
@@ -58,6 +78,14 @@ function ExerciseSpec(props) {
                   </Typography>
                   <Typography color="textSecondary">{exercise.description.replace(/(<([^>]+)>)/ig, "")}</Typography>
                </Grid>
+               <Grid item xs>
+                  {typeof(muscleArray[0]) === 'string' ? null : <img src={muscleLogo} alt='muscle icon' style={{ width: '3%', marginRight: '10px' }} />}
+                  {typeof(muscleArray[0]) === 'string' ? null : renderList(muscleArray)}
+               </Grid>
+               <Grid item xs>
+                  {typeof(equipmentArray[0]) === 'string' ? null: <img src={dumbbellLogo} alt='dumbbell icon' style={{ width: '3%', marginRight: '10px' }} /> }
+                  {typeof(equipmentArray[0]) === 'string' ? null : renderList(equipmentArray)}
+               </Grid>
                <Grid item>
                   { exerciseImage 
                      ? renderImage()
@@ -65,7 +93,7 @@ function ExerciseSpec(props) {
                   }
                </Grid>
                <Grid item>
-                  <Button variant="outlined" className={classes.button}>
+                  <Button variant="outlined" className={classes.button} onClick={props.handleAddToWorkout}>
                      Add to Workout
                   </Button>
                   <Button variant="outlined" className={classes.button} onClick={props.handleGoBack}>
