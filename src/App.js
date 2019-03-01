@@ -12,7 +12,8 @@ class App extends Component {
     equipment: [],
     muscle: [],
     exerciseimage: [],
-    exerciseSelected: null
+    exerciseSelected: null,
+    workoutExercises: ['Curls', 'Squats', 'Crunches', 'Lunges']
   }
 
   // ----------------- fetch all data ----------------
@@ -73,7 +74,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <MyWorkout />
+        <MyWorkout workoutExercises={this.state.workoutExercises} />
         { this.state.exerciseSelected
           ? <ExerciseSpec 
               exercise={this.state.exerciseSelected} 
