@@ -49,7 +49,7 @@ fetchAllData = () => {
 }
 
 componentDidMount() {
-   this.fetchAllData()
+   this.fetchAllData();
 }
 
 // ----- handle click to display selected exercise -------- 
