@@ -23,14 +23,10 @@ const styles = {
 const ExerciseCard = (props) => {
    const exercise = props.exercise;
    const { classes } = props;
-   // get muscle array
-   let muscleArray
-   if(exercise.muscles.length !== 0) {
-      muscleArray = exercise.muscles.map((muscleId) => props.findQueryForExercise('muscle', muscleId))
-   } else {
-      muscleArray = ['No data found.']
-   }
-
+   
+   
+   let exerciseCategory = props.findQueryForExercise('exercisecategory', exercise.category)
+   
    // get equipment array
    let equipmentArray
    if (exercise.equipment.length !== 0) {
@@ -38,7 +34,8 @@ const ExerciseCard = (props) => {
    } else {
       equipmentArray = ['No data found']
    }
-
+   
+   // {typeof(categoryArray[0]) === 'string' ? null : categoryArray[0].name}
    return (
       <Grid item xs={3}>
          <Paper className={classes.paper}></Paper>
@@ -51,11 +48,11 @@ const ExerciseCard = (props) => {
                <Typography color="textSecondary" variant='caption'>
                   <div className='icon-row'>
                      <div className='icon'>
-                        <img src={muscleLogo} style={{ width: '12%', marginRight: '10px' }} alt='muscles' />
-                        {typeof(muscleArray[0]) === 'string' ? null : muscleArray[0].name}
+                        <img src={muscleLogo} style={{ width: '7%', marginRight: '10px' }} alt='muscles' />
+                        {exerciseCategory.name}
                      </div>  
                      <div className='icon'>
-                        <img src={dumbbellLogo} alt='dumbbell icon' style={{ width: '14%', marginRight: '10px' }} />
+                        <img src={dumbbellLogo} alt='dumbbell icon' style={{ width: '8%', marginRight: '10px' }} />
                         {typeof(equipmentArray[0]) === 'string' ? null : equipmentArray[0].name}
                      </div>
                   </div>

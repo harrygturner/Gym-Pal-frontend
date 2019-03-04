@@ -22,3 +22,20 @@ code {
 .icon {
   margin: 0px 20px;
 }
+
+.human-body {
+  width: 50%;
+  margin-top: 10px;
+}
+
+.human-body {
+  cursor: pointer;
+}
+
+.navbar-desc {
+  margin: 15px 10px 10px 10px;
+}
+
+.main-content {
+  margin: 80px 10px;
+}
