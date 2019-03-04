@@ -6,8 +6,8 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Button from '@material-ui/core/Button';
-import muscleLogo from '../images/muscle_icon2.png';
-import dumbbellLogo from '../images/dumbbell_icon.png';
+import muscleLogo from '../images/muscles.svg';
+import dumbbellLogo from '../images/dumbbell.svg';
 
 const styles = theme => ({
    root: {
@@ -40,7 +40,7 @@ function ExerciseSpec(props) {
    const exercise = props.exercise
    const { classes } = props;
    const exerciseImage = props.findExerciseImage(exercise.id)
-   
+
    const renderImage = () => (
       <ButtonBase className={classes.image}>
          <img className={classes.img} alt="complex" src={exerciseImage.image} />
@@ -48,12 +48,7 @@ function ExerciseSpec(props) {
    );
 
    // get muscle array
-   let muscleArray
-   if(exercise.muscles.length !== 0) {
-      muscleArray = exercise.muscles.map((muscleId) => props.findQueryForExercise('muscle', muscleId))
-   } else {
-      muscleArray = ['No data found.']
-   }
+   let exerciseCategory = props.findQueryForExercise('exercisecategory', exercise.category)
 
    // get equipment array
    let equipmentArray
@@ -73,18 +68,22 @@ function ExerciseSpec(props) {
             <Grid item xs={12} sm container>
                <Grid item xs container direction="column" spacing={16}>
                <Grid item xs>
-                  <Typography gutterBottom variant="subtitle1">
+                  <Typography gutterBottom variant="h4">
                      {exercise.name}
                   </Typography>
-                  <Typography color="textSecondary">{exercise.description.replace(/(<([^>]+)>)/ig, "")}</Typography>
+                  <Typography color="textSecondary" variant='body2'>{exercise.description.replace(/(<([^>]+)>)/ig, "")}</Typography>
                </Grid>
                <Grid item xs>
-                  {typeof(muscleArray[0]) === 'string' ? null : <img src={muscleLogo} alt='muscle icon' style={{ width: '3%', marginRight: '10px' }} />}
-                  {typeof(muscleArray[0]) === 'string' ? null : renderList(muscleArray)}
+                  <Typography color="textSecondary" variant='body1'>
+                     <img src={muscleLogo} alt='muscle icon' style={{ width: '3%', marginRight: '10px' }} />
+                     {exerciseCategory.name}
+                  </Typography>
                </Grid>
                <Grid item xs>
-                  {typeof(equipmentArray[0]) === 'string' ? null: <img src={dumbbellLogo} alt='dumbbell icon' style={{ width: '3%', marginRight: '10px' }} /> }
-                  {typeof(equipmentArray[0]) === 'string' ? null : renderList(equipmentArray)}
+                  <Typography color="textSecondary" variant='body1'>
+                     {typeof(equipmentArray[0]) === 'string' ? null: <img src={dumbbellLogo} alt='dumbbell icon' style={{ width: '3%', marginRight: '10px' }} /> }
+                     {typeof(equipmentArray[0]) === 'string' ? null : renderList(equipmentArray)}
+                  </Typography>
                </Grid>
                <Grid item>
                   { exerciseImage 

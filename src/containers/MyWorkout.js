@@ -1,9 +1,28 @@
 import React, { Component } from 'react'; 
+import '../MyWorkout.css'
 import { FORMERR } from 'dns';
-// import './App.css';
+import MaterialTable from 'material-table'
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
 var placeholder = document.createElement("tr");
 placeholder.className = "placeholder";
 
+const styles = theme => ({
+  root: {
+    width: '100%',
+    marginTop: theme.spacing.unit * 3,
+    overflowX: 'auto',
+  },
+  table: {
+    minWidth: 700,
+  },
+});
 
 export default class MyWorkout extends Component {
   
@@ -12,6 +31,9 @@ export default class MyWorkout extends Component {
     selectedWorkout: 3,
     selectedWorkoutExercises: []
   }
+
+  
+
   componentDidMount(){
   fetch(`http://localhost:3001/users/3`)
   .then(res => res.json())
@@ -43,7 +65,7 @@ export default class MyWorkout extends Component {
     e.dataTransfer.setData('text/html', this.dragged);
   }
   dragEnd(e) {
-    this.dragged.style.display = 'block';
+    this.dragged.style.display = '';
     this.dragged.parentNode.removeChild(placeholder);
     
     // update state
@@ -63,28 +85,42 @@ export default class MyWorkout extends Component {
 
   dragOver(e) {
     e.preventDefault();
-    this.dragged.style.display = "none";
+    this.dragged.style.display = "block";
     if(e.target.className === 'placeholder') return;
     this.over = e.target;
     e.target.parentNode.insertBefore(placeholder, e.target);
   }
+
+  
 	render() {
     var listItems = this.state.selectedWorkoutExercises.map((item, i) => {
       return ( 
-        <tr
+        <form className='workoutrow'
           data-id={i}
           key={i}
           draggable='true'
           onDragEnd={this.dragEnd.bind(this)}
-          onDragStart={this.dragStart.bind(this)}>{item}</tr>
+          onDragStart={this.dragStart.bind(this)}>
+        <label>
+          {item} <br></br>
+          <input type="text" name="name" placeholder="Enter Reps"/>
+          <input type="text" name="name" placeholder="Enter Sets"/>
+          <input type="text" name="name" placeholder="Enter Rest Period"/>
+        </label>
+        
+        
+      </form>
       )
      });
 		return (
-			<table onDragOver={this.dragOver.bind(this)}>
-      <tbody>
+			<div onDragOver={this.dragOver.bind(this)}>
         {listItems}
-        </tbody>
-      </table>
+        <input type="submit" value="Submit" />
+      </div>
+      
+      
 		)
 	}
 }
+
+// ADDING MATERIAL UI

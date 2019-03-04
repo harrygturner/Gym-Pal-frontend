@@ -5,7 +5,6 @@ import Grid from '@material-ui/core/Grid';
 
 import ExerciseCard from '../components/ExerciseCard'
 
-
 const styles = theme => ({
    root: {
       flexGrow: 1,
