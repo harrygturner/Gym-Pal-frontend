@@ -9,6 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import muscleLogo from '../images/muscles.svg';
 import dumbbellLogo from '../images/dumbbell.svg';
+import { Link } from "react-router-dom";
 
 
 const styles = {
@@ -39,27 +40,29 @@ const ExerciseCard = (props) => {
    return (
       <Grid item xs={3}>
          <Paper className={classes.paper}></Paper>
-         <Card className={classes.card}>
-            <CardActionArea onClick={() => props.handleExerciseSelected(exercise.id)}>
-            <CardContent>
-               <Typography gutterBottom variant="h6" component="h6">
-                  {exercise.name}
-               </Typography>
-               <Typography color="textSecondary" variant='caption'>
-                  <div className='icon-row'>
-                     <div className='icon'>
-                        <img src={muscleLogo} style={{ width: '7%', marginRight: '10px' }} alt='muscles' />
-                        {exerciseCategory.name}
-                     </div>  
-                     <div className='icon'>
-                        <img src={dumbbellLogo} alt='dumbbell icon' style={{ width: '8%', marginRight: '10px' }} />
-                        {typeof(equipmentArray[0]) === 'string' ? null : equipmentArray[0].name}
+         <Link to={`/exercise/${exercise.id}`} style={{ textDecoration: 'none' }}> 
+            <Card className={classes.card}>
+               <CardActionArea onClick={() => props.handleExerciseSelected(exercise.id)}>
+               <CardContent>
+                  <Typography gutterBottom variant="h6" component="h6">
+                     {exercise.name}
+                  </Typography>
+                  <Typography color="textSecondary" variant='caption'>
+                     <div className='icon-row'>
+                        <div className='icon'>
+                           <img src={muscleLogo} style={{ width: '7%', marginRight: '10px' }} alt='muscles' />
+                           {exerciseCategory.name}
+                        </div>  
+                        <div className='icon'>
+                           <img src={dumbbellLogo} alt='dumbbell icon' style={{ width: '8%', marginRight: '10px' }} />
+                           {typeof(equipmentArray[0]) === 'string' ? null : equipmentArray[0].name}
+                        </div>
                      </div>
-                  </div>
-               </Typography>
-               </CardContent>
-            </CardActionArea>
-         </Card>
+                  </Typography>
+                  </CardContent>
+               </CardActionArea>
+            </Card>
+         </Link>
       </Grid>
    );
 }

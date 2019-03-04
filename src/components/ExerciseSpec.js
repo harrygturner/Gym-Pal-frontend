@@ -8,6 +8,7 @@ import ButtonBase from '@material-ui/core/ButtonBase';
 import Button from '@material-ui/core/Button';
 import muscleLogo from '../images/muscles.svg';
 import dumbbellLogo from '../images/dumbbell.svg';
+import { Link } from "react-router-dom";
 
 const styles = theme => ({
    root: {
@@ -59,7 +60,8 @@ function ExerciseSpec(props) {
    }
 
    const renderList = (array) => array.map(el => el.name).join(', ')
-   
+
+   const isExerciseInWorkout = () => props.exercisesInWorkout.includes(exercise)
 
    return (
       <div className={classes.root}>
@@ -92,12 +94,19 @@ function ExerciseSpec(props) {
                   }
                </Grid>
                <Grid item>
-                  <Button variant="outlined" className={classes.button} onClick={props.handleAddToWorkout}>
-                     Add to Workout
-                  </Button>
-                  <Button variant="outlined" className={classes.button} onClick={props.handleGoBack}>
-                     Go Back
-                  </Button>
+                  { isExerciseInWorkout()
+                     ?  null
+                     :  <Link to='/home' style={{ textDecoration: 'none' }}>
+                           <Button variant="outlined" className={classes.button} onClick={props.handleAddToWorkout}>
+                              Add to Workout
+                           </Button>
+                        </Link>
+                  }
+                  <Link to='/home' style={{ textDecoration: 'none' }}>
+                     <Button variant="outlined" className={classes.button} onClick={props.handleGoBack}>
+                        Go Back
+                     </Button>
+                  </Link>
                </Grid>
                </Grid>
             </Grid>

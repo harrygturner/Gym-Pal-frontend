@@ -14,31 +14,35 @@ import ListItemText from '@material-ui/core/ListItemText';
 import PersonIcon from '@material-ui/icons/Person';
 import HomeIcon from '@material-ui/icons/Home';
 import HumanBody from './HumanBody';
+import { Link } from "react-router-dom";
+import Badge from '@material-ui/core/Badge';
+
 
 const drawerWidth = 240;
 
 const styles = theme => ({
-root: {
-  display: 'flex',
-},
-appBar: {
-  zIndex: theme.zIndex.drawer + 1,
-},
-drawer: {
-  width: drawerWidth,
-  flexShrink: 0,
-},
-drawerPaper: {
-  width: drawerWidth,
-},
-content: {
-  flexGrow: 1,
-  padding: theme.spacing.unit * 3,
-},
-toolbar: theme.mixins.toolbar,
+  root: {
+    display: 'flex',
+  },
+  appBar: {
+    zIndex: theme.zIndex.drawer + 1,
+  },
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0,
+  },
+  drawerPaper: {
+    width: drawerWidth,
+  },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing.unit * 3,
+  },
+  toolbar: theme.mixins.toolbar,
 });
 
 const SideBar = (props) => {
+
   const { classes } = props;
   return (
       <div className={classes.root}>
@@ -59,14 +63,22 @@ const SideBar = (props) => {
         >
         <div className={classes.toolbar} />
         <List>
+        <Link to='/home' style={{ textDecoration: 'none' }} onClick={props.handleHomeBtnClick}>
           <ListItem button key='home'>
             <ListItemIcon><HomeIcon /></ListItemIcon>
             <ListItemText primary='Home' />
           </ListItem>
+        </Link>
+        <Link to='/MyWorkout/:id' style={{ textDecoration: 'none' }}>
           <ListItem button key='myWorkout'>
-            <ListItemIcon><PersonIcon /> </ListItemIcon>
+            <ListItemIcon>
+              <Badge badgeContent={props.numberOfExercisesInWorkOut()} color='primary'>
+                <PersonIcon /> 
+              </Badge>
+            </ListItemIcon>
             <ListItemText primary='My Workout' />
           </ListItem>
+        </Link>
         </List>
         <Divider />
           <div className='navbar-desc'>
