@@ -1,45 +1,23 @@
 import React, { Component } from 'react'; 
 import '../MyWorkout.css'
-import { FORMERR } from 'dns';
-import MaterialTable from 'material-table'
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+
 var placeholder = document.createElement("tr");
 placeholder.className = "placeholder";
-
-const styles = theme => ({
-  root: {
-    width: '100%',
-    marginTop: theme.spacing.unit * 3,
-    overflowX: 'auto',
-  },
-  table: {
-    minWidth: 700,
-  },
-});
 
 export default class MyWorkout extends Component {
   
   state = {
-    workouts: [],
+    workouts: [this.props.myWorkout],
     selectedWorkout: 3,
     selectedWorkoutExercises: []
   }
 
-  
-
-  componentDidMount(){
-  fetch(`http://localhost:3001/users/3`)
-  .then(res => res.json())
-  .then(data => this.addWorkouts(data)) 
-  .then(this.setSelectedWorkoutExercises)
-  }              
+  // componentDidMount(){
+  //   fetch(`http://localhost:3001/users/3`)
+  //     .then(res => res.json())
+  //     .then(data => this.addWorkouts(data)) 
+  //     .then(this.setSelectedWorkoutExercises)
+  // }              
   
   addWorkouts = (userData) => {
       const workouts = userData.workouts
@@ -111,7 +89,7 @@ export default class MyWorkout extends Component {
         
       </form>
       )
-     });
+    });
 		return (
 			<div onDragOver={this.dragOver.bind(this)}>
         {listItems}

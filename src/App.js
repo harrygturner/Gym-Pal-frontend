@@ -3,10 +3,10 @@ import ExerciseContainer from './containers/ExerciseContainer'
 import MyWorkout from './containers/MyWorkout'
 import ExerciseSpec from './components/ExerciseSpec';
 import SideBar from './containers/SideBar';
-// import {
-//    BrowserRouter as Router,
-//    Route
-// } from 'react-router-dom';
+import {
+   BrowserRouter as Router,
+   Route
+} from 'react-router-dom';
 
 
 class App extends Component {
@@ -188,7 +188,7 @@ render() {
                         }
                      />        
                }
-               <Route exact path='/MyWorkout/:id' component={() => <MyWorkout/>} />
+               <Route exact path='/MyWorkout' component={() => <MyWorkout myWorkout={this.state.myWorkout} />} />
             </div>
          </main>
          </div>
