@@ -3,22 +3,22 @@ import ExerciseContainer from './containers/ExerciseContainer'
 import MyWorkout from './containers/MyWorkout'
 import ExerciseSpec from './components/ExerciseSpec';
 import SideBar from './containers/SideBar';
-import {
-   BrowserRouter as Router,
-   Route
-} from 'react-router-dom';
+// import {
+//    BrowserRouter as Router,
+//    Route
+// } from 'react-router-dom';
 
 
 class App extends Component {
 
 state = {
    exercise: ['Exercises are loading...'],
+   workoutEditor: false, 
    myWorkout: [],
    equipment: [],
    exercisecategory: [],
    exerciseimage: [],
    exerciseSelected: null,
-   workoutExercises: ['Curls', 'Squats', 'Crunches', 'Lunges'],
    muscleClickedOn: null,
    filteredExercises: [],
 }
