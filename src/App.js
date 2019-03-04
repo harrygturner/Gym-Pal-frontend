@@ -35,7 +35,7 @@ class App extends Component {
   }
 
   fetchAllData = () => {
-    this.fetchData('exercise', 580);
+    this.fetchData('exercise', 10);
     this.fetchData('equipment', 10);
     this.fetchData('muscle', 15);
     this.fetchData('exerciseimage', 204);
