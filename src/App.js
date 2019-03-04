@@ -80,13 +80,8 @@ findExerciseImage = (exerciseId) => {
    return this.state.exerciseimage.find(image => image.exercise === exerciseId)
 }
 
-// ------------handle exercise spec buttons ------------------
-// handle go back
-handleGoBack = () => {
-   this.setState({
-      exerciseSelected: null
-   })
-}
+// number of exercises in the my workout state
+numberOfExercisesInWorkOut = () => this.state.myWorkout.length  
 
 // ------------- handle muscle selected -------------
 
@@ -149,36 +144,55 @@ handleMuscleSelected = (event) => {
    }
 }
 
-render() {
+// ----------- Client Side Router -------------------
 
+handleReturningToHomePage = () => {
+   this.setState({
+      exerciseSelected: null
+   })
+} 
+
+render() {
    const exercises = this.state.muscleClickedOn 
       ? this.state.filteredExercises
       : this.state.exercise
 
    return (
-      <div className="App">
-      <SideBar handleMuscleSelected={this.handleMuscleSelected} / >
-      <main>
-         <div className='main-content'>
-            { this.state.exerciseSelected
-               ? <ExerciseSpec 
-                  exercise={this.state.exerciseSelected} 
-                  findExerciseImage={this.findExerciseImage}
-                  handleGoBack={this.handleGoBack}
-                  findQueryForExercise={this.findQueryForExercise}
-                  handleAddToWorkout={this.handleAddToWorkout}
-                  /> 
-              //  : <ExerciseContainer 
-              //     exercises={exercises} 
-              //     handleExerciseSelected={this.handleExerciseSelected} 
-              //     findQueryForExercise={this.findQueryForExercise}
-              //     />
-              : <MyWorkout/>
-            }
+      <Router>
+         <div className="App">
+         <SideBar 
+            handleMuscleSelected={this.handleMuscleSelected} 
+            handleHomeBtnClick={this.handleReturningToHomePage} 
+            numberOfExercisesInWorkOut={this.numberOfExercisesInWorkOut}
+         />
+         <main style={{margin: '0px auto'}}>
+            <div className='main-content'>
+               { this.state.exerciseSelected
+                  ?  <Route exact path='/exercise/:id'
+                        component={() => <ExerciseSpec 
+                           exercise={this.state.exerciseSelected} 
+                           findExerciseImage={this.findExerciseImage}
+                           handleGoBack={this.handleReturningToHomePage}
+                           findQueryForExercise={this.findQueryForExercise}
+                           handleAddToWorkout={this.handleAddToWorkout}
+                           exercisesInWorkout={this.state.myWorkout}
+                        />
+                        }
+                     />
+                  :  <Route exact path='/home'
+                        component={()=> <ExerciseContainer 
+                           exercises={exercises} 
+                           handleExerciseSelected={this.handleExerciseSelected} 
+                           findQueryForExercise={this.findQueryForExercise}
+                        />
+                        }
+                     />        
+               }
+               <Route exact path='/MyWorkout/:id' component={() => <MyWorkout/>} />
+            </div>
+         </main>
          </div>
-         
-      </main>
-      </div>
+      </Router>
    );
 }
 }
