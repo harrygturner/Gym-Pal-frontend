@@ -19,6 +19,9 @@ export default class MyWorkout extends Component {
   //     .then(this.setSelectedWorkoutExercises)
   // }              
   
+
+ forms = document.querySelectorAll('form')
+
   addWorkouts = (userData) => {
       const workouts = userData.workouts
       this.setState({
@@ -26,16 +29,21 @@ export default class MyWorkout extends Component {
       })
   }
 
-  setSelectedWorkoutExercises = () => {
-    const workoutId = this.state.selectedWorkout
-    const workout = this.state.workouts.filter(workout => workout.id === workoutId)
-    const exercises = workout[0].workoutexercises
+
+  componentDidMount(){
+  // setSelectedWorkoutExercises = () => {
+    const workouts = this.state.workouts[0]
+    // const workout = this.state.workouts.filter(workout => workout.id === workoutId)
+    const exercises = []
+    workouts.forEach(exercise => exercises.push({name :exercise.name, sets: null, reps: null, rest: null}))
+    
     // console.log(exercises)
     // const orderedExercises = exercises.sort( (a, b) => a.order - b.order )
     this.setState({
       selectedWorkoutExercises: exercises
     })
   }
+
 
   dragStart(e) {
     this.dragged = e.currentTarget;
@@ -56,7 +64,7 @@ export default class MyWorkout extends Component {
     console.log(this.state.selectedWorkoutExercises)
     fetch('http://localhost:3001/workouts/3', {
       method: 'PATCH',
-      body: JSON.stringify({workoutexercises: this.state.selectedWorkoutExercises}), 
+      body: JSON.stringify({workoutexercises: JSON.stringify(this.state.selectedWorkoutExercises)}), 
       headers:{'Content-Type': 'application/json'}
       }).then(res => res.json())
     }
@@ -69,31 +77,42 @@ export default class MyWorkout extends Component {
     e.target.parentNode.insertBefore(placeholder, e.target);
   }
 
+  handleSubmit = () => {
+   const forms = document.querySelectorAll('form')
+   const exercises = []
+  
+   for (let i = 0; i < this.state.selectedWorkoutExercises.length; i++)
+   {
+     exercises.push({name: forms[i].dataset.name, sets: parseInt(forms[i].elements[0].value) , reps:parseInt(forms[i].elements[1].value) , rest:parseInt(forms[i].elements[2].value)})
+   }
+   this.setState({
+    selectedWorkoutExercises: exercises
+  })
+  
+  }
   
 	render() {
     var listItems = this.state.selectedWorkoutExercises.map((item, i) => {
       return ( 
-        <form className='workoutrow'
+        <form  data-name={item.name} onSubmit={e => console.log('hi')} className='workoutrow'
           data-id={i}
           key={i}
           draggable='true'
           onDragEnd={this.dragEnd.bind(this)}
           onDragStart={this.dragStart.bind(this)}>
         <label>
-          {item} <br></br>
-          <input type="text" name="name" placeholder="Enter Reps"/>
-          <input type="text" name="name" placeholder="Enter Sets"/>
-          <input type="text" name="name" placeholder="Enter Rest Period"/>
+          {item.name} <br></br>
+          <input  type="text" name="sets" placeholder="Enter Sets"/>
+          <input type="text" name="reps" placeholder="Enter Reps"/>
+          <input type="text" name="rest" placeholder="Enter Rest Period"/>
         </label>
-        
-        
       </form>
       )
     });
 		return (
 			<div onDragOver={this.dragOver.bind(this)}>
         {listItems}
-        <input type="submit" value="Submit" />
+        <button onClick={this.handleSubmit}>Submit Workout</button>
       </div>
       
       
