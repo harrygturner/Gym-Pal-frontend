@@ -70,6 +70,19 @@ handleAddToWorkout = () => {
    }
 }
 
+removeExercise = (e, exerciseToRemove) => {
+   e.preventDefault()
+   const exercises = this.state.myWorkout
+   const newExercises = exercises.filter(exercise => exercise.name !== exerciseToRemove.name)
+ 
+   this.setState({
+      myWorkout: newExercises
+   })
+}
+fetchOnSubmit = () => {
+console.log('hi')
+}
+
 // find query (muscle/equipment) for that speific exercise
 findQueryForExercise = (query, id) => {
    return this.state[query].find(data => data.id === id)
@@ -188,7 +201,7 @@ render() {
                         }
                      />        
                }
-               <Route exact path='/MyWorkout' component={() => <MyWorkout myWorkout={this.state.myWorkout} />} />
+               <Route exact path='/MyWorkout' component={() => <MyWorkout fetchOnSubmit={this.fetchOnSubmit} removeExercise={this.removeExercise} myWorkout={this.state.myWorkout} />} />
             </div>
          </main>
          </div>

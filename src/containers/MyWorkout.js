@@ -8,8 +8,9 @@ export default class MyWorkout extends Component {
   
   state = {
     workouts: [this.props.myWorkout],
-    selectedWorkout: 3,
-    selectedWorkoutExercises: []
+    workoutId: null,
+    selectedWorkoutExercises: [],
+    title: null
   }
 
   // componentDidMount(){
@@ -20,7 +21,7 @@ export default class MyWorkout extends Component {
   // }              
   
 
- forms = document.querySelectorAll('form')
+ 
 
   addWorkouts = (userData) => {
       const workouts = userData.workouts
@@ -31,14 +32,9 @@ export default class MyWorkout extends Component {
 
 
   componentDidMount(){
-  // setSelectedWorkoutExercises = () => {
     const workouts = this.state.workouts[0]
-    // const workout = this.state.workouts.filter(workout => workout.id === workoutId)
     const exercises = []
     workouts.forEach(exercise => exercises.push({name :exercise.name, sets: null, reps: null, rest: null}))
-    
-    // console.log(exercises)
-    // const orderedExercises = exercises.sort( (a, b) => a.order - b.order )
     this.setState({
       selectedWorkoutExercises: exercises
     })
@@ -53,20 +49,18 @@ export default class MyWorkout extends Component {
   dragEnd(e) {
     this.dragged.style.display = '';
     this.dragged.parentNode.removeChild(placeholder);
-    
-    // update state
     var data = this.state.selectedWorkoutExercises;
     var from = Number(this.dragged.dataset.id);
     var to = Number(this.over.dataset.id);
     if(from < to) to--;
     data.splice(to, 0, data.splice(from, 1)[0]);
     this.setState({selectedWorkoutExercises: data})
-    console.log(this.state.selectedWorkoutExercises)
-    fetch('http://localhost:3001/workouts/3', {
-      method: 'PATCH',
-      body: JSON.stringify({workoutexercises: JSON.stringify(this.state.selectedWorkoutExercises)}), 
-      headers:{'Content-Type': 'application/json'}
-      }).then(res => res.json())
+    // console.log(this.state.selectedWorkoutExercises)
+    // fetch('http://localhost:3001/workouts/3', {
+    //   method: 'PATCH',
+    //   body: JSON.stringify({workoutexercises: JSON.stringify(this.state.selectedWorkoutExercises)}), 
+    //   headers:{'Content-Type': 'application/json'}
+    //   }).then(res => res.json())
     }
 
   dragOver(e) {
@@ -83,13 +77,42 @@ export default class MyWorkout extends Component {
   
    for (let i = 0; i < this.state.selectedWorkoutExercises.length; i++)
    {
-     exercises.push({name: forms[i].dataset.name, sets: parseInt(forms[i].elements[0].value) , reps:parseInt(forms[i].elements[1].value) , rest:parseInt(forms[i].elements[2].value)})
+     exercises.push({name: forms[i].dataset.name, sets: parseInt(forms[i].elements[0].value) , reps:parseInt(forms[i].elements[1].value) , rest:parseInt(forms[i].elements[2].value), order: parseInt(forms[i].dataset.id)})
    }
    this.setState({
     selectedWorkoutExercises: exercises
   })
-  
+    fetch('http://localhost:3001/workouts', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({title: this.state.title, user_id: 3})
+}).then(resp => resp.json())
+.then(data => this.setState({
+  workoutId: data.id
+})).then(this.createWorkoutExercisesInstances)
   }
+
+  createWorkoutExercisesInstances =() => {
+    const exercises = this.state.selectedWorkoutExercises
+
+    for (let i = 0; i < this.state.selectedWorkoutExercises.length; i++)
+    {
+      this.exercisesFetch(exercises[i].name, exercises[i].sets, exercises[i].reps, exercises[i].rest, exercises[i].order, )
+    }
+   
+  }
+  
+  exercisesFetch = (name, sets, reps, rest, order) => {
+  const workoutId = this.state.workoutId
+  fetch('http://localhost:3001/workout_exercises', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({name: name, sets: sets, reps: reps, rest: rest, order: order, workout_id: workoutId})
+}).then(resp => resp.json())
+  }
+
+
+  
   
 	render() {
     var listItems = this.state.selectedWorkoutExercises.map((item, i) => {
@@ -102,17 +125,21 @@ export default class MyWorkout extends Component {
           onDragStart={this.dragStart.bind(this)}>
         <label>
           {item.name} <br></br>
-          <input  type="text" name="sets" placeholder="Enter Sets"/>
-          <input type="text" name="reps" placeholder="Enter Reps"/>
-          <input type="text" name="rest" placeholder="Enter Rest Period"/>
+          <input  type="number" name="sets" placeholder="Enter Sets"/>
+          <input type="number" name="reps" placeholder="Enter Reps"/>
+          <input type="number" name="rest" placeholder="Enter Rest Period"/>
+          <button className="remove" onClick={e => this.props.removeExercise(e, item)}>Remove</button>
         </label>
       </form>
       )
     });
 		return (
-			<div onDragOver={this.dragOver.bind(this)}>
+			<div className="WOE" onDragOver={this.dragOver.bind(this)}>
+      <input onChange={event => this.setState({
+        title: event.target.value
+      })} className="title" type="text" name="rest" placeholder="Enter Title"/>
         {listItems}
-        <button onClick={this.handleSubmit}>Submit Workout</button>
+        <button className="submit" onClick={this.handleSubmit}>Submit Workout</button>
       </div>
       
       
@@ -120,4 +147,4 @@ export default class MyWorkout extends Component {
 	}
 }
 
-// ADDING MATERIAL UI
+
