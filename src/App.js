@@ -3,6 +3,7 @@ import ExerciseContainer from './containers/ExerciseContainer'
 import MyWorkout from './containers/MyWorkout'
 import ExerciseSpec from './components/ExerciseSpec';
 import SideBar from './containers/SideBar';
+import SignIn from './containers/SignIn';
 import {
    BrowserRouter as Router,
    Route
@@ -159,6 +160,7 @@ render() {
 
    return (
       <Router>
+      <Route exact path='/' component={() => <SignIn />} /> 
          <div className="App">
          <SideBar 
             handleMuscleSelected={this.handleMuscleSelected} 
