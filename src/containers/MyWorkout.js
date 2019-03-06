@@ -31,13 +31,7 @@ export default class MyWorkout extends Component {
     this.setState({
       selectedWorkoutExercises: exercises
     })
-
-    if(!this.state.userName) {
-      this.props.history.push('/signin');
-    }
-    
   }
-
 
   dragStart(e) {
     this.dragged = e.currentTarget;
@@ -96,7 +90,7 @@ export default class MyWorkout extends Component {
           onDragStart={this.dragStart.bind(this)}>
         <label>
           {item.name} <br></br>
-          <input  type="text" name="sets" placeholder="Enter Sets"/>
+          <input type="text" name="sets" placeholder="Enter Sets"/>
           <input type="text" name="reps" placeholder="Enter Reps"/>
           <input type="text" name="rest" placeholder="Enter Rest Period"/>
         </label>
@@ -108,10 +102,6 @@ export default class MyWorkout extends Component {
         {listItems}
         <button onClick={this.handleSubmit}>Submit Workout</button>
       </div>
-      
-      
 		)
 	}
 }
-
-// ADDING MATERIAL UI

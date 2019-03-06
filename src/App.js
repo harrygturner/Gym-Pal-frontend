@@ -205,8 +205,6 @@ renderPageContent = () => {
                               exercisesInWorkout={this.state.myWorkout}
                               userName={this.state.userName}
                            />
-                           <Route exact path='/MyWorkout' component={() => <MyWorkout myWorkout={this.state.myWorkout} userName={this.state.userName} />} />
-
                         </div>
                      </main>
                </div>
@@ -233,7 +231,6 @@ renderPageContent = () => {
                            handleExerciseSelected={this.handleExerciseSelected} 
                            findQueryForExercise={this.findQueryForExercise}
                         />
-                        <Route exact path='/MyWorkout' component={() => <MyWorkout myWorkout={this.state.myWorkout} userName={this.state.userName} />} />
                      </div>
                   </main>
             </div>
@@ -248,10 +245,11 @@ render() {
 
    return (
       <Switch>
-      <Route exact path='/signin' component={routerProps => (
-         <SignIn signIn={this.signIn} {...routerProps} /> 
-      )} /> 
-      {this.renderPageContent()}
+         <Route exact path='/signin' component={routerProps => (
+            <SignIn signIn={this.signIn} {...routerProps} /> 
+         )} /> 
+         {this.renderPageContent()}
+         <Route path='/myworkout' component={() => <MyWorkout myWorkout={this.state.myWorkout} userName={this.state.userName} />} />
       </Switch>
    );
 }
