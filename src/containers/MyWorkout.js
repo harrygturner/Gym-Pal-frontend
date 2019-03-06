@@ -169,7 +169,7 @@ export default class MyWorkout extends Component {
   
 	render() { 
     return(
-      <div>
+      <div className='workout-cont'>
         {this.state.showWorkout ? <WorkoutCard workout={this.state.submittedWorkout} /> : this.renderForm() }   
       </div>
     )
