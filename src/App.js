@@ -218,8 +218,6 @@ renderPageContent = () => {
                               exercisesInWorkout={this.state.myWorkout}
                               userName={this.state.userName}
                            />
-                           <Route exact path='/MyWorkout' component={() => <MyWorkout myWorkout={this.state.myWorkout} userName={this.state.userName} />} />
-
                         </div>
                      </main>
                </div>
@@ -244,13 +242,9 @@ renderPageContent = () => {
                         <ExerciseContainer 
                            exercises={exercises} 
                            handleExerciseSelected={this.handleExerciseSelected} 
-                           findQueryForExercise={this.findQueryForExercise}
-                        />
 
-                        }
-                     />        
-               }
-               <Route  path='/MyWorkout' component={() => <MyWorkout fetchOnSubmit={this.fetchOnSubmit} removeExercise={this.removeExercise} myWorkout={this.state.myWorkout} />} />
+                     </div>
+                  </main>
 
             </div>
             )
@@ -264,10 +258,11 @@ render() {
 
    return (
       <Switch>
-      <Route exact path='/signin' component={routerProps => (
-         <SignIn signIn={this.signIn} {...routerProps} /> 
-      )} /> 
-      {this.renderPageContent()}
+         <Route exact path='/signin' component={routerProps => (
+            <SignIn signIn={this.signIn} {...routerProps} /> 
+         )} /> 
+         {this.renderPageContent()}
+         <Route path='/myworkout' component={() => <MyWorkout myWorkout={this.state.myWorkout} userName={this.state.userName} />} />
       </Switch>
    );
 }

@@ -77,10 +77,7 @@ export default class MyWorkout extends Component {
     this.setState({
       selectedWorkoutExercises: exercises
     })
-          
-
   }
-
 
   dragStart(e) {
     this.dragged = e.currentTarget;
@@ -180,6 +177,7 @@ export default class MyWorkout extends Component {
           onDragStart={this.dragStart.bind(this)}>
         <label>
           {item.name} <br></br>
+
           <input  type="number" name="sets" placeholder="Enter Sets"/>
           <input type="number" name="reps" placeholder="Enter Reps"/>
           <input type="number" name="rest" placeholder="Enter Rest Period"/>
@@ -204,10 +202,7 @@ export default class MyWorkout extends Component {
           />
     
       </div>
-      
-      
 		)
 	}
 }
-
 

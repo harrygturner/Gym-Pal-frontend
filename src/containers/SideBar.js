@@ -72,7 +72,7 @@ const SideBar = (props) => {
             <ListItemText primary='Home' />
           </ListItem>
         </Link>
-        <Link to='/MyWorkout' style={{ textDecoration: 'none' }}>
+        <Link to='/myworkout' style={{ textDecoration: 'none' }}>
           <ListItem button key='myWorkout'>
             <ListItemIcon>
               <Badge badgeContent={props.numberOfExercisesInWorkOut()} color='primary'>
