@@ -1,6 +1,7 @@
 import React, { Component } from 'react'; 
 import '../MyWorkout.css'
 
+
 var placeholder = document.createElement("tr");
 placeholder.className = "placeholder";
 
@@ -10,17 +11,9 @@ export default class MyWorkout extends Component {
     workouts: [this.props.myWorkout],
     selectedWorkout: 3,
     selectedWorkoutExercises: []
-  }
-
-  // componentDidMount(){
-  //   fetch(`http://localhost:3001/users/3`)
-  //     .then(res => res.json())
-  //     .then(data => this.addWorkouts(data)) 
-  //     .then(this.setSelectedWorkoutExercises)
-  // }              
+  }            
   
-
- forms = document.querySelectorAll('form')
+  forms = document.querySelectorAll('form')
 
   addWorkouts = (userData) => {
       const workouts = userData.workouts
@@ -31,17 +24,18 @@ export default class MyWorkout extends Component {
 
 
   componentDidMount(){
-  // setSelectedWorkoutExercises = () => {
     const workouts = this.state.workouts[0]
-    // const workout = this.state.workouts.filter(workout => workout.id === workoutId)
     const exercises = []
     workouts.forEach(exercise => exercises.push({name :exercise.name, sets: null, reps: null, rest: null}))
-    
-    // console.log(exercises)
-    // const orderedExercises = exercises.sort( (a, b) => a.order - b.order )
+  
     this.setState({
       selectedWorkoutExercises: exercises
     })
+
+    if(!this.state.userName) {
+      this.props.history.push('/signin');
+    }
+    
   }
 
 
@@ -78,14 +72,14 @@ export default class MyWorkout extends Component {
   }
 
   handleSubmit = () => {
-   const forms = document.querySelectorAll('form')
-   const exercises = []
+    const forms = document.querySelectorAll('form')
+    const exercises = []
   
-   for (let i = 0; i < this.state.selectedWorkoutExercises.length; i++)
-   {
-     exercises.push({name: forms[i].dataset.name, sets: parseInt(forms[i].elements[0].value) , reps:parseInt(forms[i].elements[1].value) , rest:parseInt(forms[i].elements[2].value)})
-   }
-   this.setState({
+    for (let i = 0; i < this.state.selectedWorkoutExercises.length; i++)
+    {
+      exercises.push({name: forms[i].dataset.name, sets: parseInt(forms[i].elements[0].value) , reps:parseInt(forms[i].elements[1].value) , rest:parseInt(forms[i].elements[2].value)})
+    }
+    this.setState({
     selectedWorkoutExercises: exercises
   })
   

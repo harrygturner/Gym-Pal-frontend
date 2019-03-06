@@ -52,7 +52,10 @@ const SideBar = (props) => {
             <Typography variant="h6" color="inherit" noWrap>
               Train Dirty, Eat Clean 
             </Typography>
-        </Toolbar>
+            <Link to='/signin' style={{ textDecoration: 'none' }}>
+              <button id='signout-btn' onClick={props.signout}>Sign Out</button>
+            </Link>
+            </Toolbar>
         </AppBar>
         <Drawer
           className={classes.drawer}

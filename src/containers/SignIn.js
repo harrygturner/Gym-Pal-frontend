@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import SignInForm from '../components/SignInForm';
 import CreateAccount from '../components/CreateAccount';
+import ErrorMessage from '../components/ErrorMessage';
+import API from '../API';
 
 export default class SignIn extends Component {
    
@@ -15,41 +17,52 @@ export default class SignIn extends Component {
       olduser: {
          email: null,
          password: null
-      }
+      },
+      errorMessage: ''
    }
 
    fullName = (first, second) => first + ' ' + second;
 
-   componentDidMount() {
-      document.querySelector('.App').style.display = 'none';
-   }
-
    handleCreateAccountClick = () => {
       this.setState({
          createAccountClicked: !this.state.createAccountClicked,
+         errorMessage: '',
       })
    }
 
    handleLogIn = (event) => {
       event.preventDefault()
-      console.log('Log in')
+      const { signIn, history } = this.props;
+      const oldUser = this.state.olduser
+      API.signin(oldUser)
+         .then(data => {
+            if(data.error) {
+               this.handleError(data.error);
+            } else {
+               signIn(data);
+               history.push('/home')
+            }
+         })
    }
 
    handleCreateAccount = (event) => {
       event.preventDefault()
+      const { signIn, history } = this.props;
       const newUser = {
          name: this.fullName(this.state.newuser.first_name, this.state.newuser.second_name),
          email: this.state.newuser.email,
          password: this.state.newuser.password
       }
       console.log(newUser)
-      fetch('http://localhost:3001/users', {
-         method: 'POST',
-         headers: {
-            'Content-Type': 'application/json'
-         },
-         body: JSON.stringify(newUser)
-      })
+      API.create(newUser)
+         .then( data => {
+            if(data.error) {
+               this.handleError(data.error);
+            } else {
+               signIn(data);
+               history.push('/home');
+            }
+         })
    }
 
    handleNewUserChange = (event) => {
@@ -71,6 +84,11 @@ export default class SignIn extends Component {
       })
    }
 
+   handleError = (message) => {
+      document.querySelector('#signin form').reset();
+      this.setState({ errorMessage: message })
+   }
+
    render() {
       return(
          <div id='signin'>
@@ -78,6 +96,7 @@ export default class SignIn extends Component {
                {this.state.createAccountClicked ? 'Log In' : 'Create Account' }
             </div>
             {this.state.createAccountClicked ? <CreateAccount handleCreateAccount={this.handleCreateAccount} handleChange={this.handleNewUserChange} /> : <SignInForm handleLogIn={this.handleLogIn} handleChange={this.handleOldUserChange} /> }
+            {this.state.errorMessage ? <ErrorMessage errorMessage={this.state.errorMessage} /> : null }
          </div>
       )
    }

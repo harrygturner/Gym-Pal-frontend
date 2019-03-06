@@ -19,6 +19,7 @@ const styles = theme => ({
 
 const ExerciseContainer = (props) => {
    const { classes } = props;
+
    const renderExercise = props.exercises.map(exercise => {
       return typeof(exercise) === 'string' 
       ? exercise 

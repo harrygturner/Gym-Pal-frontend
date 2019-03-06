@@ -43,7 +43,7 @@ code {
 }
 
 #signin {
-  background-image: url('https://images.pexels.com/photos/1552252/pexels-photo-1552252.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260');
+  background-image: url('./images/background.jpg');
   min-height: 100%;
   min-width: 1024px;
 
@@ -188,4 +188,22 @@ code {
 #signin .create-form input:nth-child(7)::-webkit-input-placeholder {
   /* Chrome/Opera/Safari */
   color: rgb(214, 214, 214);
+}
+
+#signout-btn {
+  background: inherit;
+  position: absolute;
+  left: 90%;
+  border: none;
+  font-size: 16px;
+  padding: 5px 10px;
+  cursor: pointer;
+  top: 30%;
+}
+
+.error-message {
+  color: red;
+  position: relative;
+  text-align: center;
+  margin-top: 150px;
 }
