@@ -41,3 +41,169 @@ code {
 .main-content {
   margin: 80px 10px;
 }
+
+#signin {
+  background-image: url('./images/background.jpg');
+  min-height: 100%;
+  min-width: 1024px;
+
+  /* Set up proportionate scaling */
+  width: 100%;
+  height: auto;
+
+  /* Set up positioning */
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-size: cover;
+  font-family: 'Questrial';
+}
+
+#signin h3 {
+  color: rgb(192, 192, 192);
+  letter-spacing: 3px;
+  font-size: 22px;
+}
+
+#signin .signin-form {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 30%;
+  left: 0;
+  width: 500px;
+  height: 200px;
+  background-color: rgba(0, 0, 0, 0);
+  border-radius: 3px;
+  text-align: center;
+}
+
+#signin input:nth-child(1) {
+  width: 80%;
+  border: 0ch;
+  background: inherit;
+  height: 30px;
+  font-size: 15px;
+  letter-spacing: 2px;
+  border-bottom: 1px solid rgb(214, 214, 214);
+  color: rgb(214, 214, 214);
+}
+
+#signin input:nth-child(3) {
+  width: 80%;
+  border: 0ch;
+  background: inherit;
+  height: 30px;
+  margin: 10px 0px;
+  font-size: 15px;
+  letter-spacing: 2px;
+  border-bottom: 1px solid rgb(180, 180, 180);
+  color: rgb(214, 214, 214);
+}
+
+#signin input:nth-child(1)::-webkit-input-placeholder {
+  /* Chrome/Opera/Safari */
+  color: rgb(214, 214, 214);
+}
+
+#signin input:nth-child(3)::-webkit-input-placeholder {
+  /* Chrome/Opera/Safari */
+  color: rgb(214, 214, 214);
+}
+
+#signin .signin-form input:nth-child(5) {
+  background: rgb(192, 192, 192);
+  padding: 10px 170px;
+  margin-top: 15px; 
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 15px;
+  letter-spacing: 2px;
+}
+
+#signin .create-account {
+  color: rgb(214, 214, 214);
+  letter-spacing: 2px;
+  padding: 20px;
+  right: 2%;
+  position: absolute;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+#signin .create-form {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 30%;
+  left: 0;
+  width: 500px;
+  height: 200px;
+  background-color: rgba(0, 0, 0, 0);
+  border-radius: 3px;
+  text-align: center;
+  color: rgb(214, 214, 214);
+}
+
+#signin .create-form input:nth-child(5) {
+  width: 80%;
+  border: 0ch;
+  background: inherit;
+  height: 30px;
+  margin: 5px 0px;
+  font-size: 15px;
+  letter-spacing: 2px;
+  border-bottom: 1px solid rgb(180, 180, 180);
+  color: rgb(214, 214, 214);
+}
+
+#signin .create-form input:nth-child(7) {
+  width: 80%;
+  border: 0ch;
+  background: inherit;
+  height: 30px;
+  margin: 5px 0px;
+  font-size: 15px;
+  letter-spacing: 2px;
+  border-bottom: 1px solid rgb(180, 180, 180);
+  color: rgb(214, 214, 214);
+}
+#signin .create-form input:nth-child(9) {
+  background: rgb(192, 192, 192);
+  padding: 10px 130px;
+  margin-top: 15px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 15px;
+  letter-spacing: 2px;
+}
+
+#signin .create-form input:nth-child(5)::-webkit-input-placeholder {
+  /* Chrome/Opera/Safari */
+  color: rgb(214, 214, 214);
+}
+
+#signin .create-form input:nth-child(7)::-webkit-input-placeholder {
+  /* Chrome/Opera/Safari */
+  color: rgb(214, 214, 214);
+}
+
+#signout-btn {
+  background: inherit;
+  position: absolute;
+  left: 90%;
+  border: none;
+  font-size: 16px;
+  padding: 5px 10px;
+  cursor: pointer;
+  top: 30%;
+}
+
+.error-message {
+  color: red;
+  position: relative;
+  text-align: center;
+  margin-top: 150px;
+}

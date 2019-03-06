@@ -1,17 +1,20 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import ExerciseContainer from './containers/ExerciseContainer'
 import MyWorkout from './containers/MyWorkout'
 import ExerciseSpec from './components/ExerciseSpec';
 import SideBar from './containers/SideBar';
+import SignIn from './containers/SignIn';
 import {
-   BrowserRouter as Router,
+   withRouter,
+   Switch,
    Route
 } from 'react-router-dom';
+import API from './API'
 
-
-class App extends Component {
+class App extends PureComponent {
 
 state = {
+   userName: '',
    exercise: ['Exercises are loading...'],
    workoutEditor: false, 
    myWorkout: [],
@@ -21,6 +24,17 @@ state = {
    exerciseSelected: null,
    muscleClickedOn: null,
    filteredExercises: [],
+}
+
+// -------------------- Sign In/Out -------------------
+signIn = user => {
+   localStorage.setItem('token', user.token);
+   this.setState({ userName: user.name });
+}
+
+signOut = () => {
+   localStorage.removeItem('token');
+   this.setState({ userName: '' });
 }
 
 // ----------------- fetch all data ----------------
@@ -50,6 +64,17 @@ fetchAllData = () => {
 
 componentDidMount() {
    this.fetchAllData();
+   API.validate().then(userData => {
+      if(userData.error) {
+         this.signOut();
+      } else {
+         this.signIn(userData);
+         this.props.history.push('/home')
+      }
+   })
+   if(!this.state.userName){
+      this.props.history.push('/signin');
+   }
 }
 
 // ----- handle click to display selected exercise -------- 
@@ -165,49 +190,87 @@ handleReturningToHomePage = () => {
    })
 } 
 
-render() {
+renderPageContent = () => {
    const exercises = this.state.muscleClickedOn 
       ? this.state.filteredExercises
       : this.state.exercise
 
-   return (
-      <Router>
-         <div className="App">
-         <SideBar 
-            handleMuscleSelected={this.handleMuscleSelected} 
-            handleHomeBtnClick={this.handleReturningToHomePage} 
-            numberOfExercisesInWorkOut={this.numberOfExercisesInWorkOut}
-         />
-         <main style={{margin: '0px auto'}}>
-            <div className='main-content'>
-               { this.state.exerciseSelected
-                  ?  <Route exact path='/exercise/:id'
-                        component={() => <ExerciseSpec 
-                           exercise={this.state.exerciseSelected} 
-                           findExerciseImage={this.findExerciseImage}
-                           handleGoBack={this.handleReturningToHomePage}
-                           findQueryForExercise={this.findQueryForExercise}
-                           handleAddToWorkout={this.handleAddToWorkout}
-                           exercisesInWorkout={this.state.myWorkout}
-                        />
-                        }
-                     />
-                  :  <Route exact path='/home'
-                        component={()=> <ExerciseContainer 
+   if(this.state.exerciseSelected){
+      return(
+         <Route exact path='/exercise/:id' component={() => {
+            return(
+               <div className="App">
+                  <SideBar 
+                     handleMuscleSelected={this.handleMuscleSelected} 
+                     handleHomeBtnClick={this.handleReturningToHomePage} 
+                     numberOfExercisesInWorkOut={this.numberOfExercisesInWorkOut}
+                     signout={this.signOut}
+                     userName={this.state.userName}
+                  />
+                     <main style={{margin: '0px auto'}}>
+                        <div className='main-content'>
+                           <ExerciseSpec 
+                              exercise={this.state.exerciseSelected} 
+                              findExerciseImage={this.findExerciseImage}
+                              handleGoBack={this.handleReturningToHomePage}
+                              findQueryForExercise={this.findQueryForExercise}
+                              handleAddToWorkout={this.handleAddToWorkout}
+                              exercisesInWorkout={this.state.myWorkout}
+                              userName={this.state.userName}
+                           />
+                           <Route exact path='/MyWorkout' component={() => <MyWorkout myWorkout={this.state.myWorkout} userName={this.state.userName} />} />
+
+                        </div>
+                     </main>
+               </div>
+
+            )
+         }}
+      />)
+   } else {
+      return (
+         <Route exact path='/home' component={() => {
+            return(
+            <div className="App">
+               <SideBar 
+                  handleMuscleSelected={this.handleMuscleSelected} 
+                  handleHomeBtnClick={this.handleReturningToHomePage} 
+                  numberOfExercisesInWorkOut={this.numberOfExercisesInWorkOut}
+                  signout={this.signOut}
+                  userName={this.state.userName}
+               />
+                  <main style={{margin: '0px auto'}}>
+                     <div className='main-content'>
+                        <ExerciseContainer 
                            exercises={exercises} 
                            handleExerciseSelected={this.handleExerciseSelected} 
                            findQueryForExercise={this.findQueryForExercise}
                         />
+
                         }
                      />        
                }
                <Route  path='/MyWorkout' component={() => <MyWorkout fetchOnSubmit={this.fetchOnSubmit} removeExercise={this.removeExercise} myWorkout={this.state.myWorkout} />} />
+
             </div>
-         </main>
-         </div>
-      </Router>
+            )
+         }
+      }
+      />)
+   }
+}
+
+render() {
+
+   return (
+      <Switch>
+      <Route exact path='/signin' component={routerProps => (
+         <SignIn signIn={this.signIn} {...routerProps} /> 
+      )} /> 
+      {this.renderPageContent()}
+      </Switch>
    );
 }
 }
 
-export default App;
+export default withRouter(App);

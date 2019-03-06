@@ -8,6 +8,7 @@ import {
 } from 'react-router-dom';
 
 
+
 var placeholder = document.createElement("tr");
 placeholder.className = "placeholder";
 
@@ -15,6 +16,7 @@ export default class MyWorkout extends Component {
   
   state = {
     workouts: [this.props.myWorkout],
+
     workoutId: null,
     selectedWorkoutExercises: [],
     title: null, 
@@ -59,6 +61,7 @@ export default class MyWorkout extends Component {
 
  
 
+
   addWorkouts = (userData) => {
       const workouts = userData.workouts
       this.setState({
@@ -75,6 +78,7 @@ export default class MyWorkout extends Component {
       selectedWorkoutExercises: exercises
     })
           
+
   }
 
 
@@ -109,14 +113,15 @@ export default class MyWorkout extends Component {
   }
 
   handleSubmit = () => {
-   const forms = document.querySelectorAll('form')
-   const exercises = []
-  
+    const forms = document.querySelectorAll('form')
+    const exercises = []
+
    for (let i = 0; i < this.state.selectedWorkoutExercises.length; i++)
    {
      exercises.push({name: forms[i].dataset.name, sets: parseInt(forms[i].elements[0].value) , reps:parseInt(forms[i].elements[1].value) , rest:parseInt(forms[i].elements[2].value), order: parseInt(forms[i].dataset.id)})
    }
    this.setState({
+
     selectedWorkoutExercises: exercises
   })
     fetch('http://localhost:3001/workouts', {
