@@ -2,17 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
-import AppBar from '@material-ui/core/AppBar';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import PersonIcon from '@material-ui/icons/Person';
 import HomeIcon from '@material-ui/icons/Home';
+import SignOutIcon from '@material-ui/icons/SwapHoriz';
 import HumanBody from './HumanBody';
 import { Link } from "react-router-dom";
 import Badge from '@material-ui/core/Badge';
@@ -45,18 +42,7 @@ const SideBar = (props) => {
 
   const { classes } = props;
   return (
-      <div className={classes.root}>
-        <CssBaseline />
-        <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar>
-            <Typography variant="h6" color="inherit" noWrap>
-              Train Dirty, Eat Clean 
-            </Typography>
-            <Link to='/signin' style={{ textDecoration: 'none' }}>
-              <button id='signout-btn' onClick={props.signout}>Sign Out</button>
-            </Link>
-            </Toolbar>
-        </AppBar>
+      <div className={classes.root} style={{ backgroundColor: 'gainsboro' }}>
         <Drawer
           className={classes.drawer}
           variant="permanent"
@@ -64,7 +50,6 @@ const SideBar = (props) => {
               paper: classes.drawerPaper,
           }}
         >
-        <div className={classes.toolbar} />
         <List>
         <Link to='/home' style={{ textDecoration: 'none' }} onClick={props.handleHomeBtnClick}>
           <ListItem button key='home'>
@@ -82,6 +67,14 @@ const SideBar = (props) => {
             <ListItemText primary='My Workout' />
           </ListItem>
         </Link>
+          <Link to='/signin' style={{ textDecoration: 'none' }} onClick={props.signout}>
+            <ListItem button key='signOut'>
+              <ListItemIcon>
+                  <SignOutIcon /> 
+              </ListItemIcon>
+              <ListItemText primary='Sign Out' />
+            </ListItem>
+          </Link>
         </List>
         <Divider />
           <div className='navbar-desc'>

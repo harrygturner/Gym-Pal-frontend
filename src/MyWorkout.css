@@ -1,30 +1,29 @@
 
 
   .WOE form {
-    margin-top: 20px;
-    font-size: 30px;
-    /* font-family: "impact"; */
+    margin-top: 15px;
+    font-size: 25px; 
     display: block;
     box-sizing: border-box;
     width: 100%;
-    padding: 30px 60px;
+    padding: 10px 60px;
     border-radius: 8px;
     border: 1px solid rgb(252, 248, 248);
     box-shadow:  0px 1px 1px rgba(0, 0, 0, 0.33);
     box-shadow: 2px 2px 5px grey;
- 
   }
 
   .WOE input {
   display: inline;
 	box-sizing: border-box;
-	width: 30%;
+	width: 20%;
 	padding: 8px;
 	border-radius: 8px;
 	border: 2px solid rgb(232, 231, 231);
   box-shadow: outset 0px 1px 1px rgba(0, 0, 0, 0.33);
   /* margin: left; */
-  margin: 20px 5px 0px;
+  margin: 10px 20px 0px;
+  background: rgba(270, 270, 270, 0.9);
 }
 
 .WOE .submit {
@@ -40,24 +39,23 @@
 }
 
 .WOE .remove {
-  font-size: 15px;
-  /* font-family: "impact"; */
-  padding: 10px 50px;
-  margin-top: 20px;
-  border: 1px solid rgb(252, 248, 248);
+  padding: 5px;
+  border: 1px solid rgb(209, 208, 208);
   box-shadow:  0px 1px 1px rgba(0, 0, 0, 0.33);
   box-shadow: 2px 2px 5px grey;
   border-radius: 8px;
-
+  background: rgba(240, 20, 20, 1);
+  margin-top: 10px;
+  cursor: pointer;
 }
   
 .WOE .title {
   display: block;
   margin: auto;
   width: 50%;
-  padding: 20px;
+  padding: 10px;
   text-align: center;
-  font-size: 30px;
+  font-size: 16px;
 
 }
 
@@ -87,3 +85,13 @@ th {
   border-radius: 8px;
 }
 
+.WOE {
+  display: block;
+  margin: 40px auto;
+}
+
+.workoutrow {
+  background: rgba(270, 270, 270, 0.9);
+  width: 950px;
+  height: 110px;
+}

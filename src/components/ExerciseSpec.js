@@ -65,7 +65,7 @@ function ExerciseSpec(props) {
 
    return (
       <div className={classes.root}>
-         <Paper className={classes.paper}>
+         <Paper className={classes.paper} style={{ background: 'rgba(270, 270, 270, 0.9)'}}>
          <Grid container spacing={16}>
             <Grid item xs={12} sm container>
                <Grid item xs container direction="column" spacing={16}>

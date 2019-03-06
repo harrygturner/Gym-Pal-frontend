@@ -1,11 +1,7 @@
 import React, { Component } from 'react'; 
 import '../MyWorkout.css'
 import WorkoutCard from "../components/WorkoutCard"
-
-import {
-  Route, 
-  Link
-} from 'react-router-dom';
+import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 
 
 
@@ -21,34 +17,18 @@ export default class MyWorkout extends Component {
     selectedWorkoutExercises: [],
     title: null, 
     submittedWorkout: {
-      "title": "Shoulder Boulder Bro",
-      "id": 16,
-      "user_id": 3,
-      "workout_exercises": [
-        {
-          "name": "Cable Shrug",
-          "sets": 5,
-          "reps": 12,
-          "rest": 90,
-          "order": 0
-        },
-        {
-          "name": "Military Press",
-          "sets": 5,
-          "reps": 5,
-          "rest": 180,
-          "order": 2
-        },
-        {
-          "name": "Lateral-to-Front Raises",
-          "sets": 5,
-          "reps": 20,
-          "rest": 45,
-          "order": 1
-        }
-      ]
+      title: "test",
+      id: 5,
+      user_id: 3,
+      workout_exercises: [{
+        name: "10 Min Abs",
+        sets: 4,
+        reps: 4,
+        rest: 100,
+        order: 0
+      }]
     },
-    showWorkout: true
+    showWorkout: false,
   }
 
   addWorkouts = (userData) => {
@@ -57,7 +37,6 @@ export default class MyWorkout extends Component {
         workouts: workouts
       })
   }
-
 
   componentDidMount(){
     const workouts = this.state.workouts[0]
@@ -73,6 +52,7 @@ export default class MyWorkout extends Component {
     e.dataTransfer.effectAllowed = 'move';
     e.dataTransfer.setData('text/html', this.dragged);
   }
+
   dragEnd(e) {
     this.dragged.style.display = '';
     this.dragged.parentNode.removeChild(placeholder);
@@ -101,17 +81,17 @@ export default class MyWorkout extends Component {
       exercises.push({name: forms[i].dataset.name, sets: parseInt(forms[i].elements[0].value) , reps:parseInt(forms[i].elements[1].value) , rest:parseInt(forms[i].elements[2].value), order: parseInt(forms[i].dataset.id)})
     }
     this.setState({
-
-    selectedWorkoutExercises: exercises
-  })
+      showWorkout: true,
+      selectedWorkoutExercises: exercises
+    })
     fetch('http://localhost:3001/workouts', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({title: this.state.title, user_id: 3})
-}).then(resp => resp.json())
-.then(data => this.setState({
-  workoutId: data.id
-})).then(this.createWorkoutExercisesInstances)
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({title: this.state.title, user_id: 3})
+      }).then(resp => resp.json())
+      .then(data => this.setState({
+        workoutId: data.id
+      })).then(this.createWorkoutExercisesInstances)
   }
 
   createWorkoutExercisesInstances =() => {
@@ -126,11 +106,12 @@ export default class MyWorkout extends Component {
   exercisesFetch = (name, sets, reps, rest, order) => {
   const workoutId = this.state.workoutId
   fetch('http://localhost:3001/workout_exercises', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({name: name, sets: sets, reps: reps, rest: rest, order: order, workout_id: workoutId})
-}).then(resp => resp.json())
-.then(this.getWorkoutObject)
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({name: name, sets: sets, reps: reps, rest: rest, order: order, workout_id: workoutId})
+    })
+      .then(resp => resp.json())
+      .then(this.getWorkoutObject)
   }
 
   getWorkoutObject =() => {
@@ -143,43 +124,55 @@ export default class MyWorkout extends Component {
       })
     })
   }
-  
-	render() { 
-    var listItems = this.state.selectedWorkoutExercises.map((item, i) => {
+
+  renderFormItems = () => this.state.selectedWorkoutExercises.map((item, i) => {
       return ( 
         <form  data-name={item.name} className='workoutrow'
           data-id={i}
           key={i}
           draggable='true'
           onDragEnd={this.dragEnd.bind(this)}
-          onDragStart={this.dragStart.bind(this)}>
+          onDragStart={this.dragStart.bind(this)}
+          style={{ width:'950px'}}
+          >
         <label>
-          {item.name} <br></br>
-
-          <input  type="number" name="sets" placeholder="Enter Sets"/>
-          <input type="number" name="reps" placeholder="Enter Reps"/>
-          <input type="number" name="rest" placeholder="Enter Rest Period"/>
-          <button className="remove" onClick={e => this.props.removeExercise(e, item)}>Remove</button>
-        </label>
-      </form>
+        {item.name} <br></br>
+        <div className='form-inputs'>
+        <input  type="number" name="sets" placeholder="Enter Sets"/>
+            <input type="number" name="reps" placeholder="Enter Reps"/>
+            <input type="number" name="rest" placeholder="Enter Rest Period"/>
+            <button className="remove" onClick={e => this.props.removeExercise(e, item)} style={{ marginLeft:'20px'}}>
+              <DeleteOutlinedIcon style={{ fontSize: 'medium' }} / >
+            </button>
+            </div>
+          </label>
+        </form>
       )
     });
-		return (
-			<div className="WOE" onDragOver={this.dragOver.bind(this)}>
-      <input onChange={event => this.setState({
-        title: event.target.value
-      })} className="title" type="text" name="rest" placeholder="Enter Title"/>
-        {listItems}
-        <Link to="/MyWorkout/workoutcard">
-        <button className="submit" onClick={this.handleSubmit}>Submit Workout</button>
-        </Link>
-        <Route
-            path="/MyWorkout/workoutcard"
-            component={() => <WorkoutCard workout={this.state.submittedWorkout}/> }
-          />
-    
-      </div>
-		)
-	}
-}
 
+  renderForm = () => {
+    return (
+      <div className="WOE" onDragOver={this.dragOver.bind(this)}>
+        <input onChange={event => this.setState({
+              title: event.target.value
+            })
+          } 
+          className="title" type="text" name="rest" placeholder="Enter Workout Name..."
+        />
+        {this.renderFormItems()}
+        <button className="submit" onClick={this.handleSubmit}>Submit Workout</button>
+      </div>
+    )
+  }
+
+  
+  
+	render() { 
+    return(
+      <div>
+        {this.state.showWorkout ? <WorkoutCard workout={this.state.submittedWorkout} /> : this.renderForm() }   
+      </div>
+    )
+  }
+}
+  

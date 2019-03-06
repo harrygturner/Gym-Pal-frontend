@@ -1,6 +1,16 @@
 .App {
   display: flex;
   text-align: center;
+  background-image: url('https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80');
+}
+
+.App.app-spec {
+  height: -webkit-fill-available;
+}
+
+#myworkout {
+  display: flex;
+  text-align: center;
 }
 
 .App-logo {

@@ -41,7 +41,7 @@ const ExerciseCard = (props) => {
       <Grid item xs={3}>
          <Paper className={classes.paper}></Paper>
          <Link to={`/exercise/${exercise.id}`} style={{ textDecoration: 'none' }}> 
-            <Card className={classes.card}>
+            <Card className={classes.card} style={{ background: 'rgba(270, 270, 270, 0.9)', top: '30%', right: '15%' }}>
                <CardActionArea onClick={() => props.handleExerciseSelected(exercise.id)}>
                <CardContent>
                   <Typography gutterBottom variant="h6" component="h6">

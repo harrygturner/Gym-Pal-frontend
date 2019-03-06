@@ -7,17 +7,17 @@ const WorkoutCard = props => {
     
     }
         return(
-            <div>
+            <div className='workout-timetable'>
                 <h1>{workout.title}</h1>
                 <table className="exercises">
-                <tr>
-                <th>Exercises</th>
-                <th>Sets</th>
-                <th>Reps</th>
-                <th>Rest Period</th>
-                </tr>
-            {allExercises()}
-            </table>
+                    <tr>
+                    <th>Exercises</th>
+                    <th>Sets</th>
+                    <th>Reps</th>
+                    <th>Rest Period</th>
+                    </tr>
+                {allExercises()}
+                </table>
             </div>
         )
     }

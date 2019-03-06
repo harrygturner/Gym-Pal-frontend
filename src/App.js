@@ -99,7 +99,7 @@ removeExercise = (e, exerciseToRemove) => {
    e.preventDefault()
    const exercises = this.state.myWorkout
    const newExercises = exercises.filter(exercise => exercise.name !== exerciseToRemove.name)
- 
+
    this.setState({
       myWorkout: newExercises
    })
@@ -199,7 +199,7 @@ renderPageContent = () => {
       return(
          <Route exact path='/exercise/:id' component={() => {
             return(
-               <div className="App">
+               <div className="App app-spec">
                   <SideBar 
                      handleMuscleSelected={this.handleMuscleSelected} 
                      handleHomeBtnClick={this.handleReturningToHomePage} 
@@ -207,7 +207,7 @@ renderPageContent = () => {
                      signout={this.signOut}
                      userName={this.state.userName}
                   />
-                     <main style={{margin: '0px auto'}}>
+                     <main className='main'>
                         <div className='main-content'>
                            <ExerciseSpec 
                               exercise={this.state.exerciseSelected} 
@@ -229,7 +229,7 @@ renderPageContent = () => {
       return (
          <Route exact path='/home' component={() => {
             return(
-            <div className="App">
+            <div className="App app-main">
                <SideBar 
                   handleMuscleSelected={this.handleMuscleSelected} 
                   handleHomeBtnClick={this.handleReturningToHomePage} 
@@ -237,7 +237,7 @@ renderPageContent = () => {
                   signout={this.signOut}
                   userName={this.state.userName}
                />
-                  <main style={{margin: '0px auto'}}>
+                  <main className='main'>
                      <div className='main-content'>
                         <ExerciseContainer 
                            exercises={exercises} 
@@ -263,7 +263,24 @@ render() {
             <SignIn signIn={this.signIn} {...routerProps} /> 
          )} /> 
          {this.renderPageContent()}
-         <Route path='/myworkout' component={() => <MyWorkout myWorkout={this.state.myWorkout} userName={this.state.userName} />} />
+         <Route path='/myworkout' component={() => {
+            return(
+               <div id='myworkout' className='App app-spec'>
+                  <SideBar 
+                     handleMuscleSelected={this.handleMuscleSelected} 
+                     handleHomeBtnClick={this.handleReturningToHomePage} 
+                     numberOfExercisesInWorkOut={this.numberOfExercisesInWorkOut}
+                     signout={this.signOut}
+                     userName={this.state.userName}
+                  />
+                  <MyWorkout 
+                     myWorkout={this.state.myWorkout} 
+                     userName={this.state.userName} 
+                     removeExercise={this.removeExercise}
+                     />
+               </div>
+            )
+            }}/>
       </Switch>
    );
 }
