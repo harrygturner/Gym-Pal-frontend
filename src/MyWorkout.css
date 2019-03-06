@@ -1,8 +1,89 @@
 
-  /* form {
-display: block;
-font-size: 30px;
-border: solid 1px;
-padding: 30px;
-width: 100%;
-  } */
+
+  .WOE form {
+    margin-top: 20px;
+    font-size: 30px;
+    /* font-family: "impact"; */
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 30px 60px;
+    border-radius: 8px;
+    border: 1px solid rgb(252, 248, 248);
+    box-shadow:  0px 1px 1px rgba(0, 0, 0, 0.33);
+    box-shadow: 2px 2px 5px grey;
+ 
+  }
+
+  input {
+  display: inline;
+	box-sizing: border-box;
+	width: 30%;
+	padding: 8px;
+	border-radius: 8px;
+	border: 2px solid rgb(232, 231, 231);
+  box-shadow: outset 0px 1px 1px rgba(0, 0, 0, 0.33);
+  /* margin: left; */
+  margin: 20px 5px 0px;
+}
+
+.submit {
+  font-size: 15px;
+  /* font-family: "impact"; */
+  padding: 10px 50px;
+  margin-top: 20px;
+  border: 1px solid rgb(252, 248, 248);
+  box-shadow:  0px 1px 1px rgba(0, 0, 0, 0.33);
+  box-shadow: 2px 2px 5px grey;
+  border-radius: 8px;
+  
+}
+
+.remove {
+  font-size: 15px;
+  /* font-family: "impact"; */
+  padding: 10px 50px;
+  margin-top: 20px;
+  border: 1px solid rgb(252, 248, 248);
+  box-shadow:  0px 1px 1px rgba(0, 0, 0, 0.33);
+  box-shadow: 2px 2px 5px grey;
+  border-radius: 8px;
+
+}
+  
+.title {
+  display: block;
+  margin: auto;
+  width: 50%;
+  padding: 20px;
+  text-align: center;
+  font-size: 30px;
+
+}
+
+#exercises {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  border-radius: 8px;
+}
+
+td, th {
+  border: 1px solid #ddd;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+tr:nth-child(even){background-color: #f2f2f2;}
+
+tr:hover {background-color: #ddd;}
+
+th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+  border-radius: 8px;
+}
+
