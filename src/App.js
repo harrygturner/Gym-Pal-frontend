@@ -242,7 +242,8 @@ renderPageContent = () => {
                         <ExerciseContainer 
                            exercises={exercises} 
                            handleExerciseSelected={this.handleExerciseSelected} 
-
+                           findQueryForExercise={this.findQueryForExercise}
+                        />
                      </div>
                   </main>
 

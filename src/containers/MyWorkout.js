@@ -3,8 +3,8 @@ import '../MyWorkout.css'
 import WorkoutCard from "../components/WorkoutCard"
 
 import {
-  BrowserRouter as Router,
-  Route, Link, Switch
+  Route, 
+  Link
 } from 'react-router-dom';
 
 
@@ -51,17 +51,6 @@ export default class MyWorkout extends Component {
     showWorkout: true
   }
 
-  // componentDidMount(){
-  //   fetch(`http://localhost:3001/users/3`)
-  //     .then(res => res.json())
-  //     .then(data => this.addWorkouts(data)) 
-  //     .then(this.setSelectedWorkoutExercises)
-  // }              
-  
-
- 
-
-
   addWorkouts = (userData) => {
       const workouts = userData.workouts
       this.setState({
@@ -93,12 +82,6 @@ export default class MyWorkout extends Component {
     if(from < to) to--;
     data.splice(to, 0, data.splice(from, 1)[0]);
     this.setState({selectedWorkoutExercises: data})
-    // console.log(this.state.selectedWorkoutExercises)
-    // fetch('http://localhost:3001/workouts/3', {
-    //   method: 'PATCH',
-    //   body: JSON.stringify({workoutexercises: JSON.stringify(this.state.selectedWorkoutExercises)}), 
-    //   headers:{'Content-Type': 'application/json'}
-    //   }).then(res => res.json())
     }
 
   dragOver(e) {
@@ -113,11 +96,11 @@ export default class MyWorkout extends Component {
     const forms = document.querySelectorAll('form')
     const exercises = []
 
-   for (let i = 0; i < this.state.selectedWorkoutExercises.length; i++)
-   {
-     exercises.push({name: forms[i].dataset.name, sets: parseInt(forms[i].elements[0].value) , reps:parseInt(forms[i].elements[1].value) , rest:parseInt(forms[i].elements[2].value), order: parseInt(forms[i].dataset.id)})
-   }
-   this.setState({
+    for (let i = 0; i < this.state.selectedWorkoutExercises.length; i++)
+    {
+      exercises.push({name: forms[i].dataset.name, sets: parseInt(forms[i].elements[0].value) , reps:parseInt(forms[i].elements[1].value) , rest:parseInt(forms[i].elements[2].value), order: parseInt(forms[i].dataset.id)})
+    }
+    this.setState({
 
     selectedWorkoutExercises: exercises
   })
@@ -137,8 +120,7 @@ export default class MyWorkout extends Component {
     for (let i = 0; i < this.state.selectedWorkoutExercises.length; i++)
     {
       this.exercisesFetch(exercises[i].name, exercises[i].sets, exercises[i].reps, exercises[i].rest, exercises[i].order, )
-    }
-   
+    }   
   }
   
   exercisesFetch = (name, sets, reps, rest, order) => {
@@ -152,7 +134,7 @@ export default class MyWorkout extends Component {
   }
 
   getWorkoutObject =() => {
-   const  workoutId = this.state.workoutId
+    const  workoutId = this.state.workoutId
     fetch(`http://localhost:3001/workouts/${workoutId}`)
     .then(resp => resp.json())
     .then(data => {
@@ -161,10 +143,6 @@ export default class MyWorkout extends Component {
       })
     })
   }
- 
-
- 
-  
   
 	render() { 
     var listItems = this.state.selectedWorkoutExercises.map((item, i) => {
@@ -192,12 +170,11 @@ export default class MyWorkout extends Component {
         title: event.target.value
       })} className="title" type="text" name="rest" placeholder="Enter Title"/>
         {listItems}
-       
         <Link to="/MyWorkout/workoutcard">
         <button className="submit" onClick={this.handleSubmit}>Submit Workout</button>
         </Link>
         <Route
-             path="/MyWorkout/workoutcard"
+            path="/MyWorkout/workoutcard"
             component={() => <WorkoutCard workout={this.state.submittedWorkout}/> }
           />
     

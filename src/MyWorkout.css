@@ -15,7 +15,7 @@
  
   }
 
-  input {
+  .WOE input {
   display: inline;
 	box-sizing: border-box;
 	width: 30%;
@@ -27,7 +27,7 @@
   margin: 20px 5px 0px;
 }
 
-.submit {
+.WOE .submit {
   font-size: 15px;
   /* font-family: "impact"; */
   padding: 10px 50px;
@@ -39,7 +39,7 @@
   
 }
 
-.remove {
+.WOE .remove {
   font-size: 15px;
   /* font-family: "impact"; */
   padding: 10px 50px;
@@ -51,7 +51,7 @@
 
 }
   
-.title {
+.WOE .title {
   display: block;
   margin: auto;
   width: 50%;
