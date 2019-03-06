@@ -95,6 +95,19 @@ handleAddToWorkout = () => {
    }
 }
 
+removeExercise = (e, exerciseToRemove) => {
+   e.preventDefault()
+   const exercises = this.state.myWorkout
+   const newExercises = exercises.filter(exercise => exercise.name !== exerciseToRemove.name)
+ 
+   this.setState({
+      myWorkout: newExercises
+   })
+}
+fetchOnSubmit = () => {
+console.log('hi')
+}
+
 // find query (muscle/equipment) for that speific exercise
 findQueryForExercise = (query, id) => {
    return this.state[query].find(data => data.id === id)
@@ -229,10 +242,10 @@ renderPageContent = () => {
                         <ExerciseContainer 
                            exercises={exercises} 
                            handleExerciseSelected={this.handleExerciseSelected} 
-                           findQueryForExercise={this.findQueryForExercise}
-                        />
+
                      </div>
                   </main>
+
             </div>
             )
          }
