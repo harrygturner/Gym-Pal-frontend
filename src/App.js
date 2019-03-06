@@ -201,7 +201,7 @@ render() {
                         }
                      />        
                }
-               <Route exact path='/MyWorkout' component={() => <MyWorkout fetchOnSubmit={this.fetchOnSubmit} removeExercise={this.removeExercise} myWorkout={this.state.myWorkout} />} />
+               <Route  path='/MyWorkout' component={() => <MyWorkout fetchOnSubmit={this.fetchOnSubmit} removeExercise={this.removeExercise} myWorkout={this.state.myWorkout} />} />
             </div>
          </main>
          </div>

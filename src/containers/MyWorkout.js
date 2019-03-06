@@ -1,5 +1,12 @@
 import React, { Component } from 'react'; 
 import '../MyWorkout.css'
+import WorkoutCard from "../components/WorkoutCard"
+
+import {
+  BrowserRouter as Router,
+  Route, Link, Switch
+} from 'react-router-dom';
+
 
 var placeholder = document.createElement("tr");
 placeholder.className = "placeholder";
@@ -10,7 +17,36 @@ export default class MyWorkout extends Component {
     workouts: [this.props.myWorkout],
     workoutId: null,
     selectedWorkoutExercises: [],
-    title: null
+    title: null, 
+    submittedWorkout: {
+      "title": "Shoulder Boulder Bro",
+      "id": 16,
+      "user_id": 3,
+      "workout_exercises": [
+        {
+          "name": "Cable Shrug",
+          "sets": 5,
+          "reps": 12,
+          "rest": 90,
+          "order": 0
+        },
+        {
+          "name": "Military Press",
+          "sets": 5,
+          "reps": 5,
+          "rest": 180,
+          "order": 2
+        },
+        {
+          "name": "Lateral-to-Front Raises",
+          "sets": 5,
+          "reps": 20,
+          "rest": 45,
+          "order": 1
+        }
+      ]
+    },
+    showWorkout: true
   }
 
   // componentDidMount(){
@@ -38,6 +74,7 @@ export default class MyWorkout extends Component {
     this.setState({
       selectedWorkoutExercises: exercises
     })
+          
   }
 
 
@@ -109,15 +146,28 @@ export default class MyWorkout extends Component {
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({name: name, sets: sets, reps: reps, rest: rest, order: order, workout_id: workoutId})
 }).then(resp => resp.json())
+.then(this.getWorkoutObject)
   }
 
+  getWorkoutObject =() => {
+   const  workoutId = this.state.workoutId
+    fetch(`http://localhost:3001/workouts/${workoutId}`)
+    .then(resp => resp.json())
+    .then(data => {
+      this.setState({
+        submittedWorkout: data
+      })
+    })
+  }
+ 
 
+ 
   
   
-	render() {
+	render() { 
     var listItems = this.state.selectedWorkoutExercises.map((item, i) => {
       return ( 
-        <form  data-name={item.name} onSubmit={e => console.log('hi')} className='workoutrow'
+        <form  data-name={item.name} className='workoutrow'
           data-id={i}
           key={i}
           draggable='true'
@@ -139,7 +189,15 @@ export default class MyWorkout extends Component {
         title: event.target.value
       })} className="title" type="text" name="rest" placeholder="Enter Title"/>
         {listItems}
+       
+        <Link to="/MyWorkout/workoutcard">
         <button className="submit" onClick={this.handleSubmit}>Submit Workout</button>
+        </Link>
+        <Route
+             path="/MyWorkout/workoutcard"
+            component={() => <WorkoutCard workout={this.state.submittedWorkout}/> }
+          />
+    
       </div>
       
       
