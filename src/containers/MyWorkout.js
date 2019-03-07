@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import '../MyWorkout.css'
 import WorkoutCard from "../components/WorkoutCard"
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
-
-
+import ErrorMessage from "../components/ErrorMessage"
 
 var placeholder = document.createElement("tr");
 placeholder.className = "placeholder";
@@ -16,19 +15,9 @@ export default class MyWorkout extends Component {
     workoutId: null,
     selectedWorkoutExercises: [],
     title: null, 
-    submittedWorkout: {
-      title: "test",
-      id: 5,
-      user_id: 3,
-      workout_exercises: [{
-        name: "10 Min Abs",
-        sets: 4,
-        reps: 4,
-        rest: 100,
-        order: 0
-      }]
-    },
+    submittedWorkout: null,
     showWorkout: false,
+    formError: ''
   }
 
   addWorkouts = (userData) => {
@@ -75,23 +64,50 @@ export default class MyWorkout extends Component {
   handleSubmit = () => {
     const forms = document.querySelectorAll('form')
     const exercises = []
+    
+    if(this.state.title) {
+      for (let i = 0; i < this.state.selectedWorkoutExercises.length; i++){
+        exercises.push({
+          name: forms[i].dataset.name,
+          sets: parseInt(forms[i].elements[0].value),
+          reps: parseInt(forms[i].elements[1].value),
+          rest: parseInt(forms[i].elements[2].value),
+          order: parseInt(forms[i].dataset.id),
+        })
+      }
+      
+      // see if any form inputs are left blank if not then send to server
+      let exerciseValues = Object.values(exercises[0])
+      if(exercises.length > 1){
+        for (let i = 1; i < exercises.length; i++) {
+          exerciseValues = exerciseValues.concat(Object.values(exercises[i]))
+        }
+      }
 
-    for (let i = 0; i < this.state.selectedWorkoutExercises.length; i++)
-    {
-      exercises.push({name: forms[i].dataset.name, sets: parseInt(forms[i].elements[0].value) , reps:parseInt(forms[i].elements[1].value) , rest:parseInt(forms[i].elements[2].value), order: parseInt(forms[i].dataset.id)})
+      if (exerciseValues.includes(NaN)) {
+          this.handleFormError('Workout form not complete.');
+        } else {
+          console.log('sent to server')
+          this.setState({
+            selectedWorkoutExercises: exercises
+          })
+          
+          return fetch('http://localhost:3001/workouts', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({title: this.state.title, user_id: this.props.userId})
+          })
+            .then(resp => resp.json())
+            .then(data => {
+                this.setState({
+                  workoutId: data.id
+                })
+            })
+            .then(this.createWorkoutExercisesInstances)
+        }
+      } else {
+      this.handleFormError('Workout must have a name.')
     }
-    this.setState({
-      showWorkout: true,
-      selectedWorkoutExercises: exercises
-    })
-    fetch('http://localhost:3001/workouts', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({title: this.state.title, user_id: 3})
-      }).then(resp => resp.json())
-      .then(data => this.setState({
-        workoutId: data.id
-      })).then(this.createWorkoutExercisesInstances)
   }
 
   createWorkoutExercisesInstances =() => {
@@ -105,7 +121,7 @@ export default class MyWorkout extends Component {
   
   exercisesFetch = (name, sets, reps, rest, order) => {
   const workoutId = this.state.workoutId
-  fetch('http://localhost:3001/workout_exercises', {
+  return fetch('http://localhost:3001/workout_exercises', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({name: name, sets: sets, reps: reps, rest: rest, order: order, workout_id: workoutId})
@@ -114,16 +130,19 @@ export default class MyWorkout extends Component {
       .then(this.getWorkoutObject)
   }
 
-  getWorkoutObject =() => {
+  getWorkoutObject = () => {
     const  workoutId = this.state.workoutId
-    fetch(`http://localhost:3001/workouts/${workoutId}`)
-    .then(resp => resp.json())
-    .then(data => {
-      this.setState({
-        submittedWorkout: data
+    return fetch(`http://localhost:3001/workouts/${workoutId}`)
+      .then(resp => resp.json())
+      .then(data => {
+        this.setState({
+          submittedWorkout: data,
+          showWorkout: true,
+        })
       })
-    })
   }
+
+  handleFormError = (message) => this.setState({ formError: message })
 
   renderFormItems = () => this.state.selectedWorkoutExercises.map((item, i) => {
       return ( 
@@ -161,11 +180,12 @@ export default class MyWorkout extends Component {
         />
         {this.renderFormItems()}
         <button className="submit" onClick={this.handleSubmit}>Submit Workout</button>
+        <div className='form-error'> 
+          { this.state.formError ? <ErrorMessage errorMessage={this.state.formError} /> : null }
+        </div>
       </div>
     )
   }
-
-  
   
 	render() { 
     return(

@@ -96,7 +96,9 @@ export default class SignIn extends Component {
                {this.state.createAccountClicked ? 'Log In' : 'Create Account' }
             </div>
             {this.state.createAccountClicked ? <CreateAccount handleCreateAccount={this.handleCreateAccount} handleChange={this.handleNewUserChange} /> : <SignInForm handleLogIn={this.handleLogIn} handleChange={this.handleOldUserChange} /> }
-            {this.state.errorMessage ? <ErrorMessage errorMessage={this.state.errorMessage} /> : null }
+            <div className='error-message'>
+               {this.state.errorMessage ? <ErrorMessage errorMessage={this.state.errorMessage} /> : null }
+            </div>
          </div>
       )
    }
