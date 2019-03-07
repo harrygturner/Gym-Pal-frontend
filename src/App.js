@@ -4,6 +4,7 @@ import MyWorkout from './containers/MyWorkout'
 import ExerciseSpec from './components/ExerciseSpec';
 import SideBar from './containers/SideBar';
 import SignIn from './containers/SignIn';
+import Profile from './containers/Profile'
 import {
    withRouter,
    Switch,
@@ -15,6 +16,11 @@ class App extends PureComponent {
 
 state = {
    userName: '',
+   userData: {
+      "id": 3,
+      "name": "timothy",
+      "email": "timtan93@gmail.com",
+      "password_digest": null},
    exercise: ['Exercises are loading...'],
    workoutEditor: false, 
    myWorkout: [],
@@ -72,9 +78,9 @@ componentDidMount() {
          this.props.history.push('/home')
       }
    })
-   if(!this.state.userName){
-      this.props.history.push('/signin');
-   }
+   // if(!this.state.userName){
+   //    this.props.history.push('/signin');
+   // }
 }
 
 // ----- handle click to display selected exercise -------- 
@@ -281,6 +287,17 @@ render() {
                </div>
             )
             }}/>
+            <div className="profile">
+               <SideBar 
+                  handleMuscleSelected={this.handleMuscleSelected} 
+                  handleHomeBtnClick={this.handleReturningToHomePage} 
+                  numberOfExercisesInWorkOut={this.numberOfExercisesInWorkOut}
+                  signout={this.signOut}
+                  userName={this.state.userName}
+               />
+              <Route exact path='/profile' component={() => <Profile user={this.state.userData}/>
+           } /> 
+           </div>
       </Switch>
    );
 }
