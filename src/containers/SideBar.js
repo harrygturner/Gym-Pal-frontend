@@ -41,6 +41,17 @@ const styles = theme => ({
 
 const SideBar = (props) => {
 
+  const renderBody = () => {
+    return (
+      <div className='muscle-selector'>
+        <div className='navbar-desc'>
+          Click on a body part you want to train:
+        </div>
+        <HumanBody handleMuscleSelected={props.handleMuscleSelected} />
+      </div>
+    )
+  }
+
   const { classes } = props;
   return (
       <div className={classes.root} style={{ backgroundColor: 'gainsboro' }}>
@@ -78,10 +89,7 @@ const SideBar = (props) => {
           </Link>
         </List>
         <Divider />
-          <div className='navbar-desc'>
-            Click on a body part you want to train:
-          </div>
-          < HumanBody handleMuscleSelected={props.handleMuscleSelected} />
+        { props.exerciseSelected ? null : renderBody() }
         </Drawer>
       </div>
   );

@@ -14,7 +14,10 @@ import API from './API'
 class App extends PureComponent {
 
 state = {
-   userName: '',
+   user: {
+      name: '',
+      id: null,
+   },
    exercise: ['Exercises are loading...'],
    workoutEditor: false, 
    myWorkout: [],
@@ -29,12 +32,21 @@ state = {
 // -------------------- Sign In/Out -------------------
 signIn = user => {
    localStorage.setItem('token', user.token);
-   this.setState({ userName: user.name });
+   this.setState({ user: {
+      name: user.name,
+      id: user.id,
+   }
+   });
 }
 
 signOut = () => {
    localStorage.removeItem('token');
-   this.setState({ userName: '' });
+   this.setState({ user: {
+      ...this.state.user,
+      name: '',
+      id: null
+      } 
+   });
 }
 
 // ----------------- fetch all data ----------------
@@ -72,7 +84,7 @@ componentDidMount() {
          this.props.history.push('/home')
       }
    })
-   if(!this.state.userName){
+   if(!this.state.user.name){
       this.props.history.push('/signin');
    }
 }
@@ -103,9 +115,6 @@ removeExercise = (e, exerciseToRemove) => {
    this.setState({
       myWorkout: newExercises
    })
-}
-fetchOnSubmit = () => {
-console.log('hi')
 }
 
 // find query (muscle/equipment) for that speific exercise
@@ -205,7 +214,8 @@ renderPageContent = () => {
                      handleHomeBtnClick={this.handleReturningToHomePage} 
                      numberOfExercisesInWorkOut={this.numberOfExercisesInWorkOut}
                      signout={this.signOut}
-                     userName={this.state.userName}
+                     user={this.state.user}
+                     exerciseSelected={this.state.exerciseSelected}
                   />
                      <main className='main'>
                         <div className='main-content'>
@@ -216,7 +226,7 @@ renderPageContent = () => {
                               findQueryForExercise={this.findQueryForExercise}
                               handleAddToWorkout={this.handleAddToWorkout}
                               exercisesInWorkout={this.state.myWorkout}
-                              userName={this.state.userName}
+                              user={this.state.user}
                               {...routerProps}
                            />
                         </div>
@@ -236,7 +246,7 @@ renderPageContent = () => {
                   handleHomeBtnClick={this.handleReturningToHomePage} 
                   numberOfExercisesInWorkOut={this.numberOfExercisesInWorkOut}
                   signout={this.signOut}
-                  userName={this.state.userName}
+                  user={this.state.user}
                />
                   <main className='main'>
                      <div className='main-content'>
@@ -272,11 +282,12 @@ render() {
                      handleHomeBtnClick={this.handleReturningToHomePage} 
                      numberOfExercisesInWorkOut={this.numberOfExercisesInWorkOut}
                      signout={this.signOut}
-                     userName={this.state.userName}
+                     user={this.state.user}
+                     exerciseSelected={true}
                   />
                   <MyWorkout 
                      myWorkout={this.state.myWorkout} 
-                     userName={this.state.userName} 
+                     userId={this.state.user.id} 
                      removeExercise={this.removeExercise}
                      />
                </div>
