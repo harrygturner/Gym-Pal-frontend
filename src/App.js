@@ -4,6 +4,7 @@ import MyWorkout from './containers/MyWorkout'
 import ExerciseSpec from './components/ExerciseSpec';
 import SideBar from './containers/SideBar';
 import SignIn from './containers/SignIn';
+import Profile from './containers/Profile'
 import {
    withRouter,
    Switch,
@@ -84,9 +85,11 @@ componentDidMount() {
          this.props.history.push('/home')
       }
    })
+
    if(!this.state.user.name){
       this.props.history.push('/signin');
    }
+
 }
 
 // ----- handle click to display selected exercise -------- 
@@ -293,6 +296,17 @@ render() {
                </div>
             )
             }}/>
+            <div className="profile">
+               <SideBar 
+                  handleMuscleSelected={this.handleMuscleSelected} 
+                  handleHomeBtnClick={this.handleReturningToHomePage} 
+                  numberOfExercisesInWorkOut={this.numberOfExercisesInWorkOut}
+                  signout={this.signOut}
+                  userName={this.state.userName}
+               />
+              <Route exact path='/profile' component={() => <Profile user={this.state.userData}/>
+           } /> 
+           </div>
       </Switch>
    );
 }

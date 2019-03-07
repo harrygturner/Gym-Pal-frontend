@@ -69,6 +69,12 @@ const SideBar = (props) => {
             <ListItemText primary='Home' />
           </ListItem>
         </Link>
+        <Link to='/profile' style={{ textDecoration: 'none' }} onClick={props.handleHomeBtnClick}>
+          <ListItem button key='profile'>
+            <ListItemIcon><PersonIcon /></ListItemIcon>
+            <ListItemText primary='Profile' />
+          </ListItem>
+        </Link>
         <Link to='/myworkout' style={{ textDecoration: 'none' }}>
           <ListItem button key='myWorkout'>
             <ListItemIcon>
