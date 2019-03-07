@@ -48,7 +48,8 @@ class Profile extends Component {
         })
     }
 
-    delete = () => {
+    delete = (event) => {
+        event.preventDefault()
         fetch(`http://localhost:3001/users/${this.props.user.id}`, {
             method: 'DELETE',
         })
@@ -82,13 +83,6 @@ class Profile extends Component {
                     <button onClick={this.delete}>Delete Account</button>
                 </div>
                 </form>
-                <div className ="gauge">
-                
-                
-                </div>
-                <div className ="gauge">
-                
-                </div>
             </div>
         )
     }
