@@ -48,29 +48,36 @@ class Profile extends Component {
         })
       }
 
-      delete = () => {
+      delete = (event) => {
+          event.preventDefault()
         fetch(`http://localhost:3001/users/${this.props.user.id}`, {
             method: 'DELETE',
         })
     }
 
 
-      update = () => {
-
+      update = (event) => {
+          event.preventDefault()
+        fetch(`http://localhost:3001/users/${this.props.user.id}`, {
+            method: 'PATCH',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({name: this.state.user.name , email: this.state.user.email , fat:this.state.user.fat , muscle:this.state.user.muscle })
+          })
       }
+
       render(){
         return(
             <div className='profilepage'>
                 <form className="userstats">
-                <h2>User Profile</h2>
+                <h2>{this.state.user.name}</h2>
               <input onChange={event => this.changeUserName(event)}placeholder={this.state.user.name}/>
               <input onChange={event => this.changeUserEmail(event)}placeholder={this.state.user.email}/>
               <input type="number" onChange={event => this.changeFat(event)}placeholder={this.state.user.fat}/>
               <input type="number" onChange={event => this.changeMuscle(event)}placeholder={this.state.user.muscle}/>
               <p className="fatp"> Body Fat %</p>
               <p className="musclep"> Muscle % </p>
-              <Gauge className="fat"  value={this.props.userFat} display="inline"width={380} height={200} label="" />
-              <Gauge className="muscle"  color="blue" value={this.props.userMuscle} width={380} height={200} label="" />
+              <Gauge className="fat"  value={this.props.user.fat} display="inline"width={380} height={200} label="" />
+              <Gauge className="muscle"  color="blue" value={this.props.user.muscle} width={380} height={200} label="" />
          
               <button onClick={this.update}className="update">Update Account</button>
               <button onClick={this.delete}>Delete Account</button>

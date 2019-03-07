@@ -16,9 +16,11 @@ class App extends PureComponent {
 
 state = {
    user: {
-
-      name: '',
-      id: null,
+      name: 'tim',
+      id: 3,
+      email: 'timtan93@gmail.com',
+      fat: 16,
+      muscle: 30
 
    },
    exercise: ['Exercises are loading...'],
@@ -40,6 +42,9 @@ signIn = user => {
    this.setState({ user: {
       name: user.name,
       id: user.id,
+      fat: user.fat,
+      muscle: user.muscle,
+      email: user.email,
    }
    });
 }
@@ -90,9 +95,9 @@ componentDidMount() {
       }
    })
 
-   if(!this.state.user.name){
-      this.props.history.push('/signin');
-   }
+   // if(!this.state.user.name){
+   //    this.props.history.push('/signin');
+   // }
 
 }
 
@@ -308,7 +313,7 @@ render() {
                   signout={this.signOut}
                   userName={this.state.userName}
                />
-              <Route exact path='/profile' component={() => <Profile changeUserName={this.changeUserName} changeUserEmail={this.changeUserEmail} changeMuscle={this.changeMuscle} changeFat={this.changeFat}user={this.state.user}/>
+              <Route exact path='/profile' component={() => <Profile  user={this.state.user}/>
            } /> 
            </div>
       </Switch>
