@@ -197,7 +197,7 @@ renderPageContent = () => {
 
    if(this.state.exerciseSelected){
       return(
-         <Route exact path='/exercise/:id' component={() => {
+         <Route exact path='/exercise/:id' component={routerProps => {
             return(
                <div className="App app-spec">
                   <SideBar 
@@ -217,6 +217,7 @@ renderPageContent = () => {
                               handleAddToWorkout={this.handleAddToWorkout}
                               exercisesInWorkout={this.state.myWorkout}
                               userName={this.state.userName}
+                              {...routerProps}
                            />
                         </div>
                      </main>

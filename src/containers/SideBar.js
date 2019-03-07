@@ -30,6 +30,7 @@ const styles = theme => ({
   },
   drawerPaper: {
     width: drawerWidth,
+    backgroundColor: '#f2f2f2'
   },
   content: {
     flexGrow: 1,

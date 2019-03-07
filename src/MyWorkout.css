@@ -68,7 +68,7 @@
 
 tr:nth-child(even){background-color: #f2f2f2;}
 
-tr:hover {background-color: #ddd;}
+tr:hover {background-color: gainsboro;}
 
 .WOE {
   display: block;
@@ -91,5 +91,6 @@ tr:hover {background-color: #ddd;}
 }
 
 #workout-table {
-  background: rgba(270, 270, 270, 0.9);
+  margin-top: 30px;
+  color: gainsboro;
 }

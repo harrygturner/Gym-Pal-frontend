@@ -27,7 +27,7 @@ function WorkoutCard(props) {
     return (
         <div id='workout-table'>
             <div className='title-cont'>
-                My Title
+                <h2>{props.workout.title}</h2>
             </div>
             <Paper className={classes.root}>
                 <Table className={classes.table}>
