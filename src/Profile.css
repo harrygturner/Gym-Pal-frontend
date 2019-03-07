@@ -1,20 +1,25 @@
-  form {
+  .profilepage form {
     margin-left: 250px;
     margin-top: 10px;
     font-size: 25px; 
     box-sizing: border-box;
-    padding: 30px;
-    width: 850px;
+    padding: 10px;
+    width: 810px;
+    height: 580px;
     border-radius: 8px;
     border: 1px solid rgb(252, 248, 248);
     box-shadow:  0px 1px 1px rgba(0, 0, 0, 0.33);
     box-shadow: 2px 2px 5px grey;
+    background: rgba(270, 270, 270, 0.9);
+    
   }
 
-  input {
-    display: block ;
+  .profilepage input {
+    position:relative;
+    display: inline;
       /* box-sizing: border-box; */
-      width: 675px;
+      width: 300px;
+      height: 20px;
       padding: 10px;
       border-radius: 8px;
       border: 2px solid rgb(232, 231, 231);
@@ -22,22 +27,53 @@
     margin: 10px 20px 0px;
     background: rgba(270, 270, 270, 0.9);
     margin-left: 45px;
+
+    
   }
 
-  button {
-
+  .profilepage button {
     border-radius: 8px;
     margin-left: 210px;
     padding: 10px;
     margin-bottom: 5px;
   }
   
-  button {
+  .profilepage button {
   display: block;
-  margin-left: 620px;
+  margin-left: 630px;
   width: 122px;
   }
 
-  h1 { 
+  .profilepage h2 { 
     text-align: center;
+    padding: 0px;
+  }
+
+  .profilepage {
+    height: 100vh;
+    background-image: url('https://images.pexels.com/photos/28076/pexels-photo.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260');
+    background-size: cover;
+    width: 100%;
+    position: relative;
+    display: flex;
+  }
+
+  .profilepage SVG {
+     margin-top: 0px;
+    padding-left: 10px;
+    
+  }
+
+  .fatp {
+    display: inline;
+    left: 410px;
+    position: absolute;
+    top: 380px;
+  }
+
+  .musclep {
+    display: inline;
+    left: 810px;
+    position: absolute;
+    top: 380px;
   }

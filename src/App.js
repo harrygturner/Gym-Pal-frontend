@@ -15,12 +15,12 @@ import API from './API'
 class App extends PureComponent {
 
 state = {
-   userName: '',
-   userData: {
-      "id": 3,
-      "name": "timothy",
-      "email": "timtan93@gmail.com",
-      "password_digest": null},
+   user: {
+      name: 'tim',
+      email:'timtan93@gmail.com',
+      fat: 10, 
+      muscle: 12,
+   },
    exercise: ['Exercises are loading...'],
    workoutEditor: false, 
    myWorkout: [],
@@ -31,6 +31,8 @@ state = {
    muscleClickedOn: null,
    filteredExercises: [],
 }
+// -------------------- Profile -------------------
+
 
 // -------------------- Sign In/Out -------------------
 signIn = user => {
@@ -296,7 +298,7 @@ render() {
                   signout={this.signOut}
                   userName={this.state.userName}
                />
-              <Route exact path='/profile' component={() => <Profile user={this.state.userData}/>
+              <Route exact path='/profile' component={() => <Profile changeUserName={this.changeUserName} changeUserEmail={this.changeUserEmail} changeMuscle={this.changeMuscle} changeFat={this.changeFat}user={this.state.user}/>
            } /> 
            </div>
       </Switch>
