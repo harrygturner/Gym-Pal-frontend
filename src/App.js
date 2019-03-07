@@ -47,7 +47,6 @@ signIn = user => {
 signOut = () => {
    localStorage.removeItem('token');
    this.setState({ user: {
-      ...this.state.user,
       name: '',
       id: null
       } 
@@ -296,21 +295,32 @@ render() {
                      myWorkout={this.state.myWorkout} 
                      userId={this.state.user.id} 
                      removeExercise={this.removeExercise}
+                     signOut={this.signOut}
                      />
                </div>
             )
             }}/>
-            <div className="profile">
-               <SideBar 
-                  handleMuscleSelected={this.handleMuscleSelected} 
-                  handleHomeBtnClick={this.handleReturningToHomePage} 
-                  numberOfExercisesInWorkOut={this.numberOfExercisesInWorkOut}
-                  signout={this.signOut}
-                  userName={this.state.userName}
-               />
-              <Route exact path='/profile' component={() => <Profile changeUserName={this.changeUserName} changeUserEmail={this.changeUserEmail} changeMuscle={this.changeMuscle} changeFat={this.changeFat}user={this.state.user}/>
-           } /> 
-           </div>
+         <Route exact path='/profile' 
+            component={() => {
+               return( 
+                  <div id="profile">
+                     <SideBar 
+                        handleMuscleSelected={this.handleMuscleSelected} 
+                        handleHomeBtnClick={this.handleReturningToHomePage} 
+                        numberOfExercisesInWorkOut={this.numberOfExercisesInWorkOut}
+                        signout={this.signOut}
+                        exerciseSelected={true}
+                     />
+                     <Profile 
+                        changeUserName={this.changeUserName} 
+                        changeUserEmail={this.changeUserEmail} 
+                        changeMuscle={this.changeMuscle} 
+                        changeFat={this.changeFat}
+                        user={this.state.user}
+                     />
+                  </div>
+               )
+            }}/>
       </Switch>
    );
 }

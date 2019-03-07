@@ -1,7 +1,5 @@
   .profilepage form {
-    margin-left: 250px;
-    margin-top: 10px;
-    font-size: 25px; 
+    margin-top: 20px;
     box-sizing: border-box;
     padding: 10px;
     width: 810px;
@@ -33,15 +31,8 @@
 
   .profilepage button {
     border-radius: 8px;
-    margin-left: 210px;
-    padding: 10px;
-    margin-bottom: 5px;
-  }
-  
-  .profilepage button {
-  display: block;
-  margin-left: 630px;
-  width: 122px;
+    padding: 10px 30px;
+    margin-bottom: 20px;
   }
 
   .profilepage h2 { 
@@ -50,30 +41,50 @@
   }
 
   .profilepage {
-    height: 100vh;
-    background-image: url('https://images.pexels.com/photos/28076/pexels-photo.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260');
-    background-size: cover;
-    width: 100%;
-    position: relative;
-    display: flex;
+  height: 100vh;
+  background-image: url('https://images.pexels.com/photos/28076/pexels-photo.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260');
+  background-size: cover;
+  width: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
   }
 
   .profilepage SVG {
-     margin-top: 0px;
+    margin-top: 0px;
     padding-left: 10px;
     
   }
 
   .fatp {
-    display: inline;
-    left: 410px;
     position: absolute;
-    top: 380px;
+    top: 390px;
+    font-size: 14px;
   }
 
   .musclep {
-    display: inline;
-    left: 810px;
     position: absolute;
-    top: 380px;
+    top: 390px;
+    font-size: 14px;
+  }
+
+  .fat {
+    display: flex;
+    justify-content: center;
+  }
+
+  .muscle {
+    display: flex;
+    justify-content: center;
+  }
+
+  .gauges {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0px;
+  }
+
+  #profile .btn-cont {
+    display: block;
+    justify-content: center;
   }

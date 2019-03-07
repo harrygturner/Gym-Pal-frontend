@@ -88,6 +88,7 @@ tr:hover {background-color: gainsboro;}
   width: 100%;
   position: relative;
   display: flex;
+  justify-content: center;
 }
 
 #workout-table {

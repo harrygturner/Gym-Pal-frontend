@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import '../MyWorkout.css'
 import WorkoutCard from "../components/WorkoutCard"
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
-import ErrorMessage from "../components/ErrorMessage"
+import ErrorMessage from "../components/ErrorMessage";
+import API from '../API';
 
 var placeholder = document.createElement("tr");
 placeholder.className = "placeholder";
@@ -87,23 +88,28 @@ export default class MyWorkout extends Component {
       if (exerciseValues.includes(NaN)) {
           this.handleFormError('Workout form not complete.');
         } else {
-          console.log('sent to server')
-          this.setState({
-            selectedWorkoutExercises: exercises
-          })
-          
-          return fetch('http://localhost:3001/workouts', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({title: this.state.title, user_id: this.props.userId})
-          })
-            .then(resp => resp.json())
-            .then(data => {
-                this.setState({
-                  workoutId: data.id
+          API.validate().then(userData => {
+            if(userData.error) {
+              this.signOut();
+            } else {
+              this.setState({
+                selectedWorkoutExercises: exercises
+              })
+              
+              return fetch('http://localhost:3001/workouts', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({title: this.state.title, user_id: this.props.userId})
+              })
+                .then(resp => resp.json())
+                .then(data => {
+                    this.setState({
+                      workoutId: data.id
+                    })
                 })
-            })
-            .then(this.createWorkoutExercisesInstances)
+                .then(this.createWorkoutExercisesInstances)
+            }
+          })
         }
       } else {
       this.handleFormError('Workout must have a name.')

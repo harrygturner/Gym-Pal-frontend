@@ -9,6 +9,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import PersonIcon from '@material-ui/icons/Person';
 import HomeIcon from '@material-ui/icons/Home';
+import FaceIcon from '@material-ui/icons/Face';
 import SignOutIcon from '@material-ui/icons/SwapHoriz';
 import HumanBody from './HumanBody';
 import { Link } from "react-router-dom";
@@ -71,7 +72,7 @@ const SideBar = (props) => {
         </Link>
         <Link to='/profile' style={{ textDecoration: 'none' }} onClick={props.handleHomeBtnClick}>
           <ListItem button key='profile'>
-            <ListItemIcon><PersonIcon /></ListItemIcon>
+            <ListItemIcon><FaceIcon /></ListItemIcon>
             <ListItemText primary='Profile' />
           </ListItem>
         </Link>

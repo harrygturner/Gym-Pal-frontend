@@ -20,70 +20,77 @@ class Profile extends Component {
                 fat:event.target.value
             } 
         })
-     }
-     
-     changeMuscle = (event) => {
-       this.setState({
+    }
+    
+    changeMuscle = (event) => {
+    this.setState({
         user: {
             ...this.state.user,
             muscle:event.target.value
         }
-       })
-     }
-     changeUserName = (event) => {
+    })
+    }
+    changeUserName = (event) => {
         this.setState({
             user: {
                 ...this.state.user,
                 name:event.target.value
             }
         })
-      }
-     
-      changeUserEmail = (event) => {
+    }
+    
+    changeUserEmail = (event) => {
         this.setState({
             user: {
                 ...this.state.user,
                 email:event.target.value
             }
         })
-      }
+    }
 
-      delete = () => {
+    delete = () => {
         fetch(`http://localhost:3001/users/${this.props.user.id}`, {
             method: 'DELETE',
         })
     }
 
 
-      update = () => {
+    update = () => {
 
-      }
-      render(){
+    }
+    render(){
         return(
             <div className='profilepage'>
                 <form className="userstats">
-                <h2>User Profile</h2>
-              <input onChange={event => this.changeUserName(event)}placeholder={this.state.user.name}/>
-              <input onChange={event => this.changeUserEmail(event)}placeholder={this.state.user.email}/>
-              <input type="number" onChange={event => this.changeFat(event)}placeholder={this.state.user.fat}/>
-              <input type="number" onChange={event => this.changeMuscle(event)}placeholder={this.state.user.muscle}/>
-              <p className="fatp"> Body Fat %</p>
-              <p className="musclep"> Muscle % </p>
-              <Gauge className="fat"  value={this.props.userFat} display="inline"width={380} height={200} label="" />
-              <Gauge className="muscle"  color="blue" value={this.props.userMuscle} width={380} height={200} label="" />
-         
-              <button onClick={this.update}className="update">Update Account</button>
-              <button onClick={this.delete}>Delete Account</button>
-              </form>
-              <div className ="gauge">
-              
-             
-              </div>
-              <div className ="gauge">
-              
-              </div>
+                <h2>Your Account</h2>
+                <input onChange={event => this.changeUserName(event)}placeholder={this.state.user.name}/>
+                <input onChange={event => this.changeUserEmail(event)}placeholder={this.state.user.email}/>
+                <input type="number" onChange={event => this.changeFat(event)}placeholder={this.state.user.fat}/>
+                <input type="number" onChange={event => this.changeMuscle(event)}placeholder={this.state.user.muscle}/>
+                <div className='gauges'>
+                    <div className='fat'>
+                        <Gauge className="fat"  value={this.props.userFat} display="inline"width={380} height={200} label="" />
+                        <p className="fatp"> Body Fat %</p>
+                    </div>
+                    <div className='muscle'>
+                        <Gauge className="muscle"  color="blue" value={this.props.userMuscle} width={380} height={200} label="" />
+                        <p className="musclep"> Muscle % </p>
+                    </div>
+                </div>
+                <div className='btn-cont'>
+                    <button onClick={this.update}className="update">Update Account</button><br />
+                    <button onClick={this.delete}>Delete Account</button>
+                </div>
+                </form>
+                <div className ="gauge">
+                
+                
+                </div>
+                <div className ="gauge">
+                
+                </div>
             </div>
         )
-      }
+    }
     }
 export default Profile
